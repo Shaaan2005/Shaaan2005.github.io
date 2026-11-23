@@ -446,3 +446,14 @@
   .js [data-reveal], .js [data-stagger] > *, .js .stats li { opacity: 1 !important; transform: none !important; }
   .theme-toggle, .scroll-progress, .nav-indicator { display: none; }
 }
+
+/* Small "PDF" tag inside the resume button */
+.btn-meta {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  opacity: 0.7;
+}

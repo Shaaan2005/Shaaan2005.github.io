@@ -23,7 +23,17 @@
   <meta property="og:url" content="https://shaaan2005.github.io/">
   <meta property="og:title" content="Utkarsh Rai — AI engineer">
   <meta property="og:description" content="Retrieval systems, LLM agents and the benchmarks that test them. Projects and internships by Utkarsh Rai, AI engineer.">
+  <meta property="og:site_name" content="Utkarsh Rai">
+  <meta property="og:image" content="https://shaaan2005.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Utkarsh Rai, AI engineer: I build practical AI software, and then check whether it actually works.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Utkarsh Rai — AI engineer">
+  <meta name="twitter:description" content="Retrieval systems, LLM agents and the benchmarks that test them.">
+  <meta name="twitter:image" content="https://shaaan2005.github.io/assets/og-image.png">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
@@ -84,6 +94,7 @@
         <div class="hero-actions" data-reveal style="--d:.7s">
           <a class="btn btn-primary" href="#work" data-magnetic>View my work <span class="btn-arrow" aria-hidden="true">↓</span></a>
           <a class="btn btn-ghost" href="https://github.com/Shaaan2005" data-magnetic>My GitHub profile <span class="btn-arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="assets/Utkarsh_Rai_AI_Engineer_Resume.pdf" download data-magnetic>Download resume <span class="btn-meta">PDF</span></a>
         </div>
       </div>
 
@@ -186,9 +197,10 @@
 
               <h4>My role</h4>
               <p>
-                I designed, built and evaluated the system during my internship at Info Origin, and I’m
-                the only contributor to the repository. It has a pytest suite of over 100 tests that
-                runs on every push through GitHub Actions.
+                I designed and built the first version during my internship at Info Origin, then kept
+                improving it afterwards: the benchmark, the new ranking default and the test suite came
+                later. I’m the only contributor to the repository, and its 107 tests run on every push
+                through GitHub Actions.
               </p>
             </div>
 
@@ -442,7 +454,7 @@
               <h3>Data Science &amp; AI Intern <span class="tl-org">· Info Origin</span></h3>
               <ul class="tl-points">
                 <li>Built an AI resume-screening system end to end: semantic search over ChromaDB, department detection across 24 job categories, and a Flask web app.</li>
-                <li>Designed the first ranking logic as a 30/70 blend of keyword and semantic scores, then built a benchmark that showed re-ranking hurt quality, so dense retrieval became the default.</li>
+                <li>Designed the first ranking logic as a 30/70 blend of keyword and semantic scores with cross-encoder re-ranking. After the internship I re-tested it with a benchmark (see the featured project).</li>
                 <li>Replaced a hard-coded category-alias list with a semantic classifier to handle synonyms and non-standard phrasing.</li>
                 <li>Set up fully offline evaluation with RAGAS and a local Llama&nbsp;3 judge. The original pipeline reached 93.33% context recall, with candidate data kept on-premise and no cloud API cost.</li>
               </ul>
@@ -489,10 +501,10 @@
             NTPC, then retrieval and LLM systems at Info Origin.
           </p>
           <p>
-            Info Origin is where I started benchmarking my own design choices. The measurements showed that a
-            re-ranking stage I’d added made results worse, so I removed it from the default. I’ve kept that habit
-            since: the job-tracker agent has its own evaluation harness, and the research assistant says so when
-            a paper doesn’t contain the answer instead of guessing.
+            After the internship I kept working on that system and built a benchmark to test my own design
+            choices. It showed that a re-ranking stage I’d added made results worse, so I removed it from the
+            default. I’ve kept that habit: the job-tracker agent has its own evaluation harness, and the research
+            assistant says so when a paper doesn’t contain the answer instead of guessing.
           </p>
           <p>
             Right now I’m sharpening my data structures and algorithms, and building more around retrieval,
@@ -538,6 +550,10 @@
 
           <ul class="contact-list">
             <li>
+              <span class="contact-label">Resume</span>
+              <a href="assets/Utkarsh_Rai_AI_Engineer_Resume.pdf" download>Download my resume (PDF, 1 page) <span aria-hidden="true">↓</span></a>
+            </li>
+            <li>
               <span class="contact-label">LinkedIn</span>
               <a href="https://www.linkedin.com/in/utkarsh-rai-3236281b4/" rel="me">Connect with me on LinkedIn <span aria-hidden="true">↗</span></a>
             </li>
@@ -563,6 +579,7 @@
           <li><a href="mailto:utbalbharati@gmail.com">Email</a></li>
           <li><a href="https://www.linkedin.com/in/utkarsh-rai-3236281b4/">LinkedIn</a></li>
           <li><a href="https://github.com/Shaaan2005">GitHub</a></li>
+          <li><a href="assets/Utkarsh_Rai_AI_Engineer_Resume.pdf" download>Resume (PDF)</a></li>
           <li><a href="#top">Back to top <span aria-hidden="true">↑</span></a></li>
         </ul>
       </nav>
