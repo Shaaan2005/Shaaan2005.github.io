@@ -1,0 +1,448 @@
+/* =========================================================
+   Motion & interaction (loaded after styles.css)
+   Rules: animate only transform / opacity / stroke; every
+   effect has a finished, readable state without JS (no .js
+   class on <html>); reduced-motion users get the finished
+   state instantly.
+   ========================================================= */
+
+/* ---------- Header: layout, reading progress, sliding indicator, theme toggle ---------- */
+.header-inner { justify-content: flex-start; }
+.wordmark { margin-right: auto; }
+
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: 0 50%;
+  transform: scaleX(var(--progress, 0));
+  pointer-events: none;
+}
+
+@media (min-width: 48.0625rem) {
+  .site-nav { position: relative; } /* anchor for the sliding indicator (desktop only; mobile nav is a drop-down) */
+}
+.nav-indicator {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: var(--iw, 0px);
+  transform: translateX(var(--ix, 0px));
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .55s var(--ease-out), width .55s var(--ease-out), opacity .25s;
+}
+.nav-indicator.is-visible { opacity: 1; }
+.js .site-nav a[aria-current="true"] { box-shadow: none; border-radius: 4px; }
+
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-left: var(--s-3);
+  padding: 0;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color var(--dur-1), transform .4s var(--ease-out);
+}
+.theme-toggle[hidden] { display: none; }
+.theme-toggle:hover { border-color: var(--ink); transform: rotate(-12deg); }
+.theme-toggle:active { transform: scale(.9); }
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tt-sun, .tt-rays, .tt-moon {
+  transform-origin: 12px 12px;
+  transition: transform .6s var(--ease-out), opacity .3s;
+}
+/* Light theme shows the moon (switch to dark); dark theme shows the sun. */
+.tt-sun, .tt-rays { opacity: 0; transform: rotate(-90deg) scale(.4); }
+[data-theme="dark"] .tt-sun, [data-theme="dark"] .tt-rays { opacity: 1; transform: none; }
+[data-theme="dark"] .tt-moon { opacity: 0; transform: rotate(90deg) scale(.4); }
+
+/* Circular theme reveal (View Transitions API). Browsers without it switch instantly. */
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+/* ---------- Scroll reveals ---------- */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity .8s var(--ease-out) var(--d, 0s),
+    transform 1s var(--ease-out) var(--d, 0s);
+}
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+.js [data-stagger] > * {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .6s var(--ease-out), transform .7s var(--ease-out);
+  transition-delay: calc(var(--d, 0s) + .2s + var(--si, 0) * 75ms);
+}
+.js .is-in [data-stagger] > *,
+.js [data-stagger].is-in > * { opacity: 1; transform: none; }
+
+/* Once revealed, hand transform back to hover interactions (fast, no delay). */
+.js [data-reveal].is-done {
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out), border-color var(--dur-1);
+}
+
+/* ---------- Hero ---------- */
+.nowrap { white-space: nowrap; }
+
+.js .hero-title .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders and italic overhang inside the mask */
+  padding: 0 .08em .16em 0;
+  margin: 0 -.08em -.16em 0;
+}
+.js .hero-title .wi {
+  display: inline-block;
+  transform: translateY(110%) rotate(4deg);
+  transform-origin: 0 100%;
+  animation: word-up 1s var(--ease-out) forwards;
+  animation-delay: calc(.08s + var(--wi, 0) * 55ms);
+}
+@keyframes word-up { to { transform: none; } }
+
+.hero-check {
+  display: inline-block;
+  width: .6em;
+  height: .5em;
+  margin-left: .1em;
+  overflow: visible;
+  vertical-align: baseline;
+}
+.hero-check path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.js .hero-check path {
+  stroke-dashoffset: 1;
+  animation: draw .75s var(--ease-io) forwards;
+  animation-delay: var(--check-d, 1.3s);
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* Buttons: magnetic pull (JS sets --mx/--my), arrow nudge, press */
+.btn {
+  transform: translate(var(--mx, 0px), var(--my, 0px));
+  transition:
+    background-color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease),
+    transform .45s var(--ease-out);
+}
+.btn:active { transform: translate(var(--mx, 0px), var(--my, 0px)) scale(.97); }
+.btn-arrow { display: inline-block; transition: transform .35s var(--ease-out); }
+.btn-primary:hover .btn-arrow { transform: translateY(3px); }
+.btn-ghost:hover .btn-arrow { transform: translate(2px, -2px); }
+
+/* ---------- Featured: stats row ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-5);
+  margin-top: var(--s-6);
+}
+.stats li { position: relative; padding-left: var(--s-4); }
+.stats li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .2em;
+  bottom: .2em;
+  width: 2px;
+  background: var(--accent);
+  transform-origin: 50% 100%;
+}
+.stat-num {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 1.5rem + 1.5vw, 2.75rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--ink);
+}
+.stat-num small { font-family: var(--font-mono); font-size: .42em; letter-spacing: 0; color: var(--muted); }
+.stat-label { display: block; margin-top: var(--s-2); font-size: var(--fs-xs); line-height: 1.4; color: var(--muted); }
+
+.js .stats li { opacity: 0; transform: translateY(10px); transition: opacity .6s var(--ease-out), transform .7s var(--ease-out); }
+.js .stats li::before { transform: scaleY(0); transition: transform .8s var(--ease-out); }
+.js .stats.is-playing li { opacity: 1; transform: none; }
+.js .stats.is-playing li::before { transform: none; }
+.stats li:nth-child(2), .stats li:nth-child(2)::before { transition-delay: .08s; }
+.stats li:nth-child(3), .stats li:nth-child(3)::before { transition-delay: .16s; }
+.stats li:nth-child(4), .stats li:nth-child(4)::before { transition-delay: .24s; }
+
+/* ---------- Featured: pipeline "runs" ---------- */
+.pipeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: 0 50%;
+}
+.pipeline { position: relative; }
+.step-n {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-bottom: 2px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: .6875rem;
+  transition: background-color .35s var(--ease-out), color .35s var(--ease-out), transform .5s var(--ease-out);
+}
+.js .pipeline::before { transform: scaleX(0); }
+.js .pipeline.is-playing::before { transform: scaleX(1); transition: transform 2.3s var(--ease-io) .1s; }
+.js .pipeline li > * { transition: opacity .5s var(--ease-out), background-color .35s var(--ease-out), color .35s var(--ease-out), transform .5s var(--ease-out); }
+.js .pipeline:not(.is-playing) .step-t,
+.js .pipeline:not(.is-playing) .step-d { opacity: .35; }
+.js .pipeline:not(.is-playing) .step-n { background: transparent; color: var(--accent-ink); transform: scale(.85); }
+.js .pipeline.is-playing li > * { transition-delay: calc(.2s + var(--i, 0) * .38s); }
+/* After the run, drop the stagger so theme switches recolor every step at once. */
+.js .pipeline.is-settled li > * { transition-delay: 0s; }
+.pipeline li:hover .step-n { transform: scale(1.15); transition-delay: 0s; }
+
+/* ---------- Featured: benchmark ---------- */
+.bench-bar {
+  transform-origin: 0 50%;
+  transition: width .6s var(--ease-out), transform 1.1s var(--ease-out);
+  transition-delay: 0s, calc(.15s + var(--i, 0) * 110ms);
+}
+.js .bench:not(.is-playing) .bench-bar { transform: scaleX(0); }
+.bench-rows li { transition: opacity .3s var(--ease-out); }
+.bench-rows:hover li:not(:hover) { opacity: .4; }
+.bench-rows li:hover .bench-label { color: var(--ink); }
+.bench-toggle button { transition: background-color .25s var(--ease-out), color .25s var(--ease-out), transform .3s var(--ease-out); }
+.bench-toggle button:active { transform: scale(.94); }
+
+/* ---------- Project cards ---------- */
+.js .project.is-done:hover,
+.js .project.is-done:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: var(--rule-strong);
+}
+.project-visual { transition: background-color .4s var(--ease-out); }
+.project:hover .project-visual { background: var(--bg-alt); }
+
+/* DecisionOS: advisors take turns, then the chair delivers the verdict */
+.viz-board .spoke { stroke: var(--rule-strong); stroke-width: 1.25; }
+.viz-board .spoke-chair { stroke: var(--accent); stroke-width: 1.5; }
+.viz-board .ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.viz-board .center-wait { opacity: 0; }
+.viz-board .center-done { fill: var(--accent-ink); font-weight: 500; }
+
+.js .viz-board .spoke { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.js .viz-board .center-done { opacity: 0; }
+.js .viz-board .chair circle:not(.ring) { fill: var(--surface); stroke: var(--ink-2); }
+.js .viz-board .chair text { fill: var(--ink); }
+
+.js .is-playing .viz-board .seat circle:not(.ring) { animation: seat-speak 1s var(--ease-out) both; animation-delay: calc(var(--i, 0) * .42s); }
+.js .is-playing .viz-board .seat .ring { animation: ring 1s var(--ease-out) both; animation-delay: calc(var(--i, 0) * .42s); }
+.js .is-playing .viz-board .spoke { animation: draw .55s var(--ease-io) both; animation-delay: calc(var(--i, 0) * .42s + .1s); }
+.js .is-playing .viz-board .spoke-chair { animation-delay: 2.25s; }
+.js .is-playing .viz-board .center-wait { animation: wait 2.5s linear both; }
+.js .is-playing .viz-board .center-done { animation: fade-in .5s var(--ease-out) 2.55s both; }
+.js .is-playing .viz-board .chair circle:not(.ring) { animation: chair-on .5s var(--ease-out) 2.4s both; }
+.js .is-playing .viz-board .chair text { animation: chair-text .5s var(--ease-out) 2.4s both; }
+.js .is-playing .viz-board .chair .ring { animation: ring 1.1s var(--ease-out) 2.4s both; }
+
+@keyframes seat-speak {
+  0%   { fill: var(--surface); stroke: var(--ink-2); }
+  30%  { fill: var(--accent-wash); stroke: var(--accent); }
+  100% { fill: var(--surface); stroke: var(--ink-2); }
+}
+@keyframes ring { 0% { opacity: .8; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
+@keyframes wait { 0% { opacity: 0; } 8%, 86% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes chair-on { from { fill: var(--surface); stroke: var(--ink-2); } to { fill: var(--accent); stroke: var(--accent); } }
+@keyframes chair-text { from { fill: var(--ink); } to { fill: var(--on-accent); } }
+
+/* Job tracker: tool calls run in sequence like a log */
+.viz-trace li:last-child::before { background: var(--accent); border-color: var(--accent); }
+.js .viz-trace li:last-child::before { background: var(--bg); border-color: var(--ink-2); }
+.js .project-visual:not(.is-playing) .viz-trace li,
+.js .project-visual:not(.is-playing) .viz-trace .ok { opacity: 0; }
+.js .is-playing .viz-trace li { animation: log-in .45s var(--ease-out) both; animation-delay: calc(.15s + var(--i, 0) * .5s); }
+.js .is-playing .viz-trace .ok { animation: fade-in .3s var(--ease-out) both; animation-delay: calc(.5s + var(--i, 0) * .5s); }
+.js .is-playing .viz-trace li:last-child::before { animation: dot-on .4s var(--ease-out) 2.1s both; }
+@keyframes log-in { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+@keyframes dot-on { from { background: var(--bg); border-color: var(--ink-2); } to { background: var(--accent); border-color: var(--accent); } }
+
+/* Research assistant: answers with a citation, then declines the off-topic question */
+.qa-a { position: relative; transform-origin: 0 100%; }
+.qa-q { transform-origin: 100% 100%; }
+.qa-dots {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: .6rem;
+  opacity: 0;
+}
+.qa-dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: dot-bounce .9s var(--ease-io) infinite;
+}
+.qa-dots i:nth-child(2) { animation-delay: .15s; }
+.qa-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot-bounce { 0%, 60%, 100% { transform: none; opacity: .5; } 30% { transform: translateY(-3px); opacity: 1; } }
+
+.js .project-visual:not(.is-playing) .viz-qa > p { opacity: 0; }
+.js .is-playing .qa-1 { animation: bubble-in .45s var(--ease-out) .1s both; }
+.js .is-playing .qa-2 { animation: bubble-in .45s var(--ease-out) .55s both; }
+.js .is-playing .qa-2 .qa-dots { animation: dots 1s linear .55s both; }
+.js .is-playing .qa-2 .qa-text { animation: fade-in .35s var(--ease-out) 1.5s both; }
+.js .is-playing .qa-3 { animation: bubble-in .45s var(--ease-out) 2.1s both; }
+.js .is-playing .qa-4 { animation: bubble-in .45s var(--ease-out) 2.55s both; }
+.js .is-playing .qa-4 .qa-dots { animation: dots 1s linear 2.55s both; }
+.js .is-playing .qa-4 .qa-text { animation: fade-in .35s var(--ease-out) 3.5s both; }
+@keyframes bubble-in { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes dots { 0%, 92% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ---------- Experience: the timeline draws down, entries follow ---------- */
+.tl-item:nth-child(1) { --i: 0; }
+.tl-item:nth-child(2) { --i: 1; }
+.tl-item:nth-child(3) { --i: 2; }
+.js .timeline .tl-item { transition: opacity .7s var(--ease-out), transform .8s var(--ease-out); transition-delay: calc(var(--i) * .45s); }
+.js .timeline .tl-body::before { transition: transform .5s var(--ease-out); transition-delay: calc(var(--i) * .45s + .1s); }
+.js .timeline .tl-body::after { transition: transform 1s var(--ease-io); transition-delay: calc(var(--i) * .45s + .15s); }
+.js .timeline:not(.is-playing) .tl-item { opacity: 0; transform: translateY(18px); }
+.js .timeline:not(.is-playing) .tl-body::before { transform: scale(0); }
+.js .timeline:not(.is-playing) .tl-body::after { transform: scaleY(0); }
+.js .timeline.is-settled .tl-item,
+.js .timeline.is-settled .tl-body::before,
+.js .timeline.is-settled .tl-body::after { transition-delay: 0s; }
+.tl-item:hover .tl-body::before { background: var(--accent); }
+
+/* ---------- Earlier projects: the whole row is the link ---------- */
+.earlier-list li {
+  position: relative;
+  transition: padding-left .4s var(--ease-out), background-color .3s;
+}
+.earlier-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  transition: transform .4s var(--ease-out);
+}
+.earlier-list a::after { content: ""; position: absolute; inset: 0; }
+.earlier-list li:hover,
+.earlier-list li:focus-within { padding-left: var(--s-4); background: var(--surface); }
+.earlier-list li:hover::before,
+.earlier-list li:focus-within::before { transform: none; }
+.earlier-list li:hover a { color: var(--accent-ink); }
+.earlier-list li.no-link:hover { padding-left: 0; background: transparent; }
+.earlier-list li.no-link::before { display: none; }
+
+/* ---------- Contact ---------- */
+.contact-handle {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size .6s var(--ease-out), color var(--dur-1);
+}
+.contact-link:hover .contact-handle,
+.contact-link:focus-visible .contact-handle { background-size: 100% 1px; }
+.contact-list a span { display: inline-block; transition: transform .35s var(--ease-out); }
+.contact-list a:hover span { transform: translate(2px, -2px); }
+
+.copy-btn { display: inline-flex; align-items: center; gap: .4em; transition: border-color var(--dur-1), color var(--dur-1), transform .3s var(--ease-out); }
+.copy-btn:active { transform: scale(.96); }
+.copy-btn.is-copied { border-color: var(--accent); color: var(--accent-ink); }
+.copy-label { display: inline-block; }
+.copy-btn.is-copied .copy-label { animation: label-pop .4s var(--ease-out); }
+@keyframes label-pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Responsive for the new pieces ---------- */
+@media (max-width: 64rem) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--s-5); }
+}
+/* Other projects on tablets: tech labels move under the description instead of crowding the edge */
+@media (min-width: 48.0625rem) and (max-width: 64rem) {
+  .earlier-list li { grid-template-columns: 13rem minmax(0, 1fr); }
+  .earlier-list .earlier-tech { grid-column: 2; white-space: normal; }
+}
+@media (max-width: 48rem) {
+  .nav-indicator { display: none; }
+  .theme-toggle { order: 2; margin-left: 0; margin-right: var(--s-2); }
+  .nav-toggle { order: 3; }
+  /* Timeline: date sits above each entry, on the same line */
+  .tl-item { grid-template-columns: 1fr; }
+  .tl-when { padding: 0 0 var(--s-2) var(--s-6); border-left: 1px solid var(--rule-strong); }
+}
+@media (hover: none) {
+  .js .project.is-done:hover { transform: none; box-shadow: none; }
+}
+
+/* ---------- Reduced motion: finished states, no movement ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal],
+  .js [data-stagger] > *,
+  .js .stats li { opacity: 1 !important; transform: none !important; }
+  .js .hero-title .wi { transform: none !important; animation: none !important; }
+  .qa-dots i { animation: none !important; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+  }
+}
+
+@media print {
+  .js [data-reveal], .js [data-stagger] > *, .js .stats li { opacity: 1 !important; transform: none !important; }
+  .theme-toggle, .scroll-progress, .nav-indicator { display: none; }
+}

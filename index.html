@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Utkarsh Rai — AI engineer</title>
+  <meta name="description" content="Utkarsh Rai is an AI engineer and final-year B.Tech ECE student at IIIT Naya Raipur, building retrieval systems, LLM agents and the benchmarks that test them.">
+  <meta name="author" content="Utkarsh Rai">
+  <meta name="theme-color" content="#F7F4EE">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    /* Runs before first paint: enables motion styles and applies the saved or system theme (no flash). */
+    (function () {
+      var d = document.documentElement, t = null;
+      d.classList.add("js");
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      d.dataset.theme = t;
+    })();
+  </script>
+  <link rel="canonical" href="https://shaaan2005.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shaaan2005.github.io/">
+  <meta property="og:title" content="Utkarsh Rai — AI engineer">
+  <meta property="og:description" content="Retrieval systems, LLM agents and the benchmarks that test them. Projects and internships by Utkarsh Rai, AI engineer.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/motion.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="wordmark" href="#top" aria-label="Utkarsh Rai, back to top">
+        <span class="wordmark-mark" aria-hidden="true">UR</span>
+        <span class="wordmark-name">Utkarsh Rai</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-label">Menu</span>
+        <span class="nav-toggle-icon" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a class="nav-github" href="https://github.com/Shaaan2005">GitHub <span aria-hidden="true">↗</span></a></li>
+        </ul>
+        <span class="nav-indicator" aria-hidden="true"></span>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle class="tt-sun" cx="12" cy="12" r="4.5"/>
+          <g class="tt-rays">
+            <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/>
+          </g>
+          <path class="tt-moon" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/>
+        </svg>
+      </button>
+    </div>
+    <span class="scroll-progress" aria-hidden="true"></span>
+  </header>
+
+  <main id="main">
+    <!-- ========== Hero ========== -->
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-text">
+        <p class="eyebrow" data-reveal>AI engineer · B.Tech ECE, IIIT Naya Raipur · Class of 2027</p>
+        <h1 id="hero-title" class="hero-title">I build practical AI software, <em>and then check whether it actually <span class="nowrap">works.<svg class="hero-check" viewBox="0 0 48 40" aria-hidden="true" focusable="false"><path pathLength="1" d="M4 22 C 10 26, 14 31, 18 35 C 24 24, 33 12, 44 4"/></svg></span></em></h1>
+        <p class="hero-lede" data-reveal style="--d:.55s">
+          I’m Utkarsh Rai, an AI engineer in the final year of a B.Tech in Electronics and Communication
+          Engineering. I build retrieval systems, multi-agent LLM apps and tool-calling agents, and where I can,
+          I measure them with tests and benchmarks. I’ve done two AI internships, at Info Origin and NTPC.
+        </p>
+        <div class="hero-actions" data-reveal style="--d:.7s">
+          <a class="btn btn-primary" href="#work" data-magnetic>View my work <span class="btn-arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn-ghost" href="https://github.com/Shaaan2005" data-magnetic>My GitHub profile <span class="btn-arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="At a glance" data-reveal style="--d:.85s">
+        <dl data-stagger>
+          <div>
+            <dt>Focus</dt>
+            <dd>Retrieval, LLM agents and evaluation</dd>
+          </div>
+          <div>
+            <dt>Internships</dt>
+            <dd>Data Science &amp; AI Intern, Info Origin (2026) · AI Intern, NTPC (2025)</dd>
+          </div>
+          <div>
+            <dt>Studying</dt>
+            <dd>B.Tech ECE, IIIT Naya Raipur (2023–2027)</dd>
+          </div>
+          <div>
+            <dt>Based in</dt>
+            <dd>Noida, India</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <!-- ========== Work ========== -->
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="section-num" aria-hidden="true">01</p>
+          <h2 id="work-title">Selected work</h2>
+          <p class="section-intro">Three AI projects I’d point to first, starting with the one I’ve tested most thoroughly.</p>
+        </header>
+
+        <!-- Featured project -->
+        <article class="featured" aria-labelledby="p-resume" data-reveal>
+          <div class="featured-head">
+            <p class="kicker"><span class="kicker-accent">Featured</span> · Info Origin internship · 2026</p>
+            <h3 id="p-resume">AI Resume Screening &amp; RAG Evaluation System</h3>
+            <p class="featured-lede">
+              A privacy-first web app that lets a recruiter search a pool of resumes by meaning instead of
+              exact keywords, plus a reproducible benchmark that decides how it ranks candidates.
+            </p>
+          </div>
+
+          <ul class="stats" aria-label="Project at a glance" data-play>
+            <li><span class="stat-num" data-count="242">242</span><span class="stat-label">sample resumes indexed</span></li>
+            <li><span class="stat-num" data-count="48">48</span><span class="stat-label">labeled benchmark queries</span></li>
+            <li><span class="stat-num" data-count="107">107</span><span class="stat-label">automated tests in CI</span></li>
+            <li><span class="stat-num"><span data-count="32">32</span><small>&nbsp;ms</small></span><span class="stat-label">per search, dense retrieval (one run)</span></li>
+          </ul>
+
+          <figure class="demo" data-reveal>
+            <div class="demo-frame">
+              <video controls muted playsinline preload="none" width="1280" height="800"
+                     poster="assets/resume-screening-demo-poster.jpg"
+                     aria-describedby="demo-caption">
+                <source src="assets/resume-screening-demo.mp4" type="video/mp4">
+                <a href="https://github.com/Shaaan2005/AI-Resume-Screening-and-RAG-Evaluation-System#-demo-walkthrough">Watch the demo walkthrough on GitHub</a>
+              </video>
+            </div>
+            <figcaption id="demo-caption">
+              Demo recording at 2× speed (21&nbsp;s, no sound): a semantic search across the 242 sample resumes,
+              matching one resume against a job description, then the benchmark dashboard.
+            </figcaption>
+          </figure>
+
+          <ol class="pipeline" aria-label="How a search works" data-play>
+            <li><span class="step-n">1</span><span class="step-t">Extract text</span><span class="step-d">PDF &amp; DOCX</span></li>
+            <li><span class="step-n">2</span><span class="step-t">Chunk</span><span class="step-d">200-word pieces</span></li>
+            <li><span class="step-n">3</span><span class="step-t">Embed</span><span class="step-d">all-mpnet-base-v2</span></li>
+            <li><span class="step-n">4</span><span class="step-t">Store</span><span class="step-d">ChromaDB, cosine</span></li>
+            <li><span class="step-n">5</span><span class="step-t">Detect department</span><span class="step-d">cross-encoder</span></li>
+            <li><span class="step-n">6</span><span class="step-t">Rank</span><span class="step-d">best-matching chunk</span></li>
+          </ol>
+
+          <div class="featured-grid">
+            <div class="featured-copy">
+              <h4>The problem</h4>
+              <p>
+                Keyword-based screening misses candidates who describe the same skill in different words.
+                And resumes are personal data, so I didn’t want to send them to a cloud API.
+              </p>
+
+              <h4>What it does</h4>
+              <p>
+                A Flask app with sign-in, resume upload and semantic search. A query like “accountant with
+                payroll experience” is matched to one of 24 job departments, then resumes in that department
+                are ranked by their best-matching passage. Each result gets a SHORTLIST, CONSIDER or REJECT
+                verdict based on how far its score sits above the rest of the pool.
+              </p>
+
+              <h4>Privacy-first by design</h4>
+              <p>
+                Text extraction, embeddings and vector search all run on the host machine. The optional
+                LLM-judged evaluation (RAGAS) can use Llama&nbsp;3 locally through Ollama, so no cloud
+                service is needed. Uploads are checked by file signature and size, and forms are protected
+                with CSRF tokens.
+              </p>
+
+              <h4>My role</h4>
+              <p>
+                I designed, built and evaluated the system during my internship at Info Origin, and I’m
+                the only contributor to the repository. It has a pytest suite of over 100 tests that
+                runs on every push through GitHub Actions.
+              </p>
+            </div>
+
+            <figure class="bench" aria-labelledby="bench-title" data-play>
+              <div class="bench-head">
+                <figcaption id="bench-title">
+                  <span class="bench-title">Retrieval benchmark</span>
+                  <span class="bench-sub">4 of the 8 setups tested · 48 labeled recruiter queries · 242 sample resumes</span>
+                </figcaption>
+                <div class="bench-toggle" role="group" aria-label="Choose a metric">
+                  <button type="button" data-metric="ndcg" aria-pressed="true">nDCG@10</button>
+                  <button type="button" data-metric="mrr" aria-pressed="false">MRR</button>
+                  <button type="button" data-metric="p5" aria-pressed="false">P@5</button>
+                  <button type="button" data-metric="lat" aria-pressed="false">Latency</button>
+                </div>
+              </div>
+
+              <p class="bench-note" id="bench-note" aria-live="polite">nDCG@10, higher is better (scale 0–1)</p>
+
+              <ul class="bench-rows" aria-describedby="bench-note">
+                <li class="is-current" data-ndcg="0.513" data-mrr="0.843" data-p5="0.567" data-lat="32">
+                  <span class="bench-label">Dense retrieval only <span class="bench-tag">current default</span></span>
+                  <span class="bench-track"><span class="bench-bar" style="--w:51.3%"></span></span>
+                  <span class="bench-val">0.513</span>
+                </li>
+                <li data-ndcg="0.502" data-mrr="0.805" data-p5="0.554" data-lat="163">
+                  <span class="bench-label">MS MARCO MiniLM re-ranker</span>
+                  <span class="bench-track"><span class="bench-bar" style="--w:50.2%"></span></span>
+                  <span class="bench-val">0.502</span>
+                </li>
+                <li data-ndcg="0.469" data-mrr="0.760" data-p5="0.508" data-lat="663">
+                  <span class="bench-label">BGE reranker base</span>
+                  <span class="bench-track"><span class="bench-bar" style="--w:46.9%"></span></span>
+                  <span class="bench-val">0.469</span>
+                </li>
+                <li data-ndcg="0.400" data-mrr="0.627" data-p5="0.413" data-lat="347">
+                  <span class="bench-label">STS cross-encoder + keywords <span class="bench-tag">original design</span></span>
+                  <span class="bench-track"><span class="bench-bar" style="--w:40%"></span></span>
+                  <span class="bench-val">0.400</span>
+                </li>
+              </ul>
+
+              <p class="bench-finding">
+                <strong>What it changed:</strong> the original re-ranking stage lowered nDCG@10 from 0.513
+                to 0.400 and took 347&nbsp;ms per search instead of 32&nbsp;ms. Re-ranking is now off by
+                default and available as an option.
+              </p>
+
+              <details class="bench-table">
+                <summary>Show all benchmark numbers as a table</summary>
+                <div class="table-wrap">
+                  <table>
+                    <caption class="visually-hidden">Retrieval benchmark results by ranking setup</caption>
+                    <thead>
+                      <tr><th scope="col">Setup</th><th scope="col">P@5</th><th scope="col">MRR</th><th scope="col">nDCG@10</th><th scope="col">Latency</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><th scope="row">Dense retrieval only (default)</th><td>0.567</td><td>0.843</td><td>0.513</td><td>32&nbsp;ms</td></tr>
+                      <tr><th scope="row">STS cross-encoder + 30% keywords</th><td>0.413</td><td>0.627</td><td>0.400</td><td>347&nbsp;ms</td></tr>
+                      <tr><th scope="row">MS MARCO MiniLM re-ranker</th><td>0.554</td><td>0.805</td><td>0.502</td><td>163&nbsp;ms</td></tr>
+                      <tr><th scope="row">BGE reranker base</th><td>0.508</td><td>0.760</td><td>0.469</td><td>663&nbsp;ms</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="table-note">Latencies come from one benchmark run and vary between runs.</p>
+              </details>
+            </figure>
+          </div>
+
+          <div class="limits" data-reveal>
+            <h4>What these numbers don’t show</h4>
+            <ul>
+              <li>48 queries is a small test set.</li>
+              <li>A result counts as relevant if it comes from the query’s job category, so the benchmark can’t judge ordering <em>within</em> a department (say, Python vs. Java engineers).</li>
+              <li>The resumes are a public Kaggle sample (CC0), not a real applicant pool.</li>
+              <li>These are retrieval scores. They don’t measure real-world hiring quality or fairness, and the tool is meant to support a recruiter’s judgment, not replace it.</li>
+            </ul>
+          </div>
+
+          <div class="featured-foot">
+            <ul class="tags" aria-label="Technologies used">
+              <li>Python</li><li>Flask</li><li>SQLite</li><li>ChromaDB</li><li>sentence-transformers</li>
+              <li>Cross-encoders</li><li>RAGAS</li><li>Ollama · Llama&nbsp;3</li><li>pytest</li><li>GitHub Actions</li><li>Docker</li>
+            </ul>
+            <div class="links">
+              <a class="link-arrow" href="https://github.com/Shaaan2005/AI-Resume-Screening-and-RAG-Evaluation-System">AI Resume Screening repository <span aria-hidden="true">↗</span></a>
+              <a class="link-arrow" href="https://github.com/Shaaan2005/AI-Resume-Screening-and-RAG-Evaluation-System/blob/main/benchmark/RESULTS.md">Full benchmark results <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Other selected projects -->
+        <div class="project-grid">
+          <!-- DecisionOS -->
+          <article class="project" data-reveal aria-labelledby="p-decisionos">
+            <div class="project-visual" aria-hidden="true" data-play data-replay>
+              <svg viewBox="0 0 320 180" class="viz-board" focusable="false">
+                <line pathLength="1" class="spoke" style="--i:0" x1="160" y1="26" x2="160" y2="90"/>
+                <line pathLength="1" class="spoke" style="--i:1" x1="270" y1="58" x2="160" y2="90"/>
+                <line pathLength="1" class="spoke" style="--i:2" x1="270" y1="122" x2="160" y2="90"/>
+                <line pathLength="1" class="spoke" style="--i:3" x1="50" y1="122" x2="160" y2="90"/>
+                <line pathLength="1" class="spoke" style="--i:4" x1="50" y1="58" x2="160" y2="90"/>
+                <line pathLength="1" class="spoke spoke-chair" x1="160" y1="154" x2="160" y2="90"/>
+                <ellipse cx="160" cy="90" rx="72" ry="38" class="table"/>
+                <text x="160" y="87" class="center center-wait">debating…</text>
+                <text x="160" y="94" class="center center-done">verdict</text>
+                <g class="seat" style="--i:0"><circle class="ring" cx="160" cy="26" r="22"/><circle cx="160" cy="26" r="22"/><text x="160" y="30">CEO</text></g>
+                <g class="seat" style="--i:1"><circle class="ring" cx="270" cy="58" r="22"/><circle cx="270" cy="58" r="22"/><text x="270" y="62">CFO</text></g>
+                <g class="seat" style="--i:2"><circle class="ring" cx="270" cy="122" r="22"/><circle cx="270" cy="122" r="22"/><text x="270" y="126">CTO</text></g>
+                <g class="seat" style="--i:3"><circle class="ring" cx="50" cy="122" r="22"/><circle cx="50" cy="122" r="22"/><text x="50" y="126">Risk</text></g>
+                <g class="seat" style="--i:4"><circle class="ring" cx="50" cy="58" r="22"/><circle cx="50" cy="58" r="22"/><text x="50" y="62">Mentor</text></g>
+                <g class="seat chair"><circle class="ring" cx="160" cy="154" r="22"/><circle cx="160" cy="154" r="22"/><text x="160" y="158">Chair</text></g>
+              </svg>
+            </div>
+            <p class="kicker">Full-stack · Multi-agent LLM app</p>
+            <h3 id="p-decisionos">DecisionOS: an AI boardroom</h3>
+            <p>
+              A single chatbot tends to agree with whoever is asking. DecisionOS instead runs a structured debate
+              between five advisor agents (CEO, CFO, CTO, risk analyst and mentor), and a chairman agent then
+              writes the verdict, confidence score, key risks and an action plan.
+            </p>
+            <p>
+              Debates are orchestrated with LangGraph, and past decisions are kept in ChromaDB so later
+              discussions can draw on them. It’s deployed as a web app and installable PWA. I built it on my own.
+            </p>
+            <ul class="tags" aria-label="Technologies used">
+              <li>FastAPI</li><li>LangGraph</li><li>ChromaDB</li><li>SQLAlchemy</li><li>JWT auth</li><li>React</li><li>Vite</li><li>Ollama / OpenAI</li>
+            </ul>
+            <div class="links">
+              <a class="link-arrow" href="https://decisionos-ai-boardroom.vercel.app">Try the DecisionOS live app <span aria-hidden="true">↗</span></a>
+              <a class="link-arrow" href="https://github.com/Shaaan2005/decisionos-ai-boardroom">DecisionOS repository <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+
+          <!-- Job Tracker Agent -->
+          <article class="project" data-reveal aria-labelledby="p-jobtracker">
+            <div class="project-visual" aria-hidden="true" data-play data-replay>
+              <div class="viz-trace">
+                <p class="trace-head">GET /agent-runs · example</p>
+                <ol>
+                  <li style="--i:0"><span>extract_posting_fields</span><span class="ok">ok</span></li>
+                  <li style="--i:1"><span>match_skills</span><span class="ok">0.6</span></li>
+                  <li style="--i:2"><span>save_application</span><span class="ok">id=1</span></li>
+                  <li style="--i:3"><span>finish</span><span class="ok">done</span></li>
+                </ol>
+              </div>
+            </div>
+            <p class="kicker">Backend · Tool-calling agent</p>
+            <h3 id="p-jobtracker">Job Tracker Agent</h3>
+            <p>
+              Paste a job posting (text or a URL) and a local Llama&nbsp;3 agent extracts the company, role,
+              deadline and required skills, compares them with your skills profile and saves the application.
+              You manage everything through a REST API.
+            </p>
+            <p>
+              I wrote the agent loop by hand instead of using a framework. LLM output is validated with Pydantic,
+              skill matching is plain Python so scores stay deterministic, and every agent step is logged.
+              On 12 hand-labeled synthetic postings, skill extraction scored 0.99 precision and 0.93 recall.
+              That’s a small, synthetic test set.
+            </p>
+            <ul class="tags" aria-label="Technologies used">
+              <li>Python</li><li>FastAPI</li><li>Pydantic</li><li>SQLAlchemy</li><li>SQLite</li><li>Ollama · Llama&nbsp;3</li><li>pytest</li><li>Docker</li>
+            </ul>
+            <div class="links">
+              <a class="link-arrow" href="https://job-tracker-agent-twrl.onrender.com/docs">Try the Job Tracker API live <span aria-hidden="true">↗</span></a>
+              <a class="link-arrow" href="https://github.com/Shaaan2005/job-tracker-agent">Job Tracker Agent repository <span aria-hidden="true">↗</span></a>
+            </div>
+            <p class="link-note">The live demo runs on a free host and can take up to a minute to wake up.</p>
+          </article>
+
+          <!-- Research Assistant -->
+          <article class="project project-wide" data-reveal aria-labelledby="p-research">
+            <div class="project-visual" aria-hidden="true" data-play data-replay>
+              <div class="viz-qa">
+                <p class="qa-q qa-1">What datasets were evaluated?</p>
+                <p class="qa-a qa-2"><span class="qa-dots"><i></i><i></i><i></i></span><span class="qa-text">Answer drawn only from retrieved passages <span class="cite">p. 5 · Experiments</span></span></p>
+                <p class="qa-q qa-3">What is the recipe for chocolate cake?</p>
+                <p class="qa-a qa-none qa-4"><span class="qa-dots"><i></i><i></i><i></i></span><span class="qa-text">Not found in the provided paper.</span></p>
+              </div>
+            </div>
+            <p class="kicker">AI · Retrieval-augmented generation</p>
+            <h3 id="p-research">Multi-Agent Research Assistant</h3>
+            <p>
+              Reading research papers end to end takes a long time, and plain chatbots often misquote them.
+              This Streamlit app splits a paper into page-tagged chunks, and separate agents summarize it,
+              break down its methods, datasets and limitations, and answer questions with page citations.
+            </p>
+            <p>
+              If the paper doesn’t contain the answer, the app says so instead of guessing. I built it for a
+              midterm project evaluation and wrote an accompanying report in LaTeX. Comparing several papers
+              at once is planned next.
+            </p>
+            <ul class="tags" aria-label="Technologies used">
+              <li>Python</li><li>Streamlit</li><li>pypdf</li><li>scikit-learn (TF-IDF)</li><li>ChromaDB (optional)</li><li>Groq / OpenAI / Ollama</li>
+            </ul>
+            <div class="links">
+              <a class="link-arrow" href="https://github.com/Shaaan2005/Multi-Agent-AI-Research-Assistant-for-Scientific-Paper-Analysis">Research Assistant repository <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Other projects -->
+        <div class="earlier" data-reveal>
+          <h3 class="earlier-title">Other projects</h3>
+          <p class="earlier-intro">Smaller builds, plus the hardware and product work from my degree.</p>
+          <ul class="earlier-list" data-stagger>
+            <li>
+              <a href="https://github.com/Shaaan2005/Smart_security_camera">Smart Security Camera</a>
+              <span class="earlier-desc">Built during my AI internship at NTPC: detects faces in live video and matches them against known faces.</span>
+              <span class="earlier-tech">Python · OpenCV</span>
+            </li>
+            <li>
+              <a href="https://github.com/Shaaan2005/upi-autopay-prd">UPI AutoPay PRD</a>
+              <span class="earlier-desc">A self-initiated product case study on reducing failed EMI auto-debits, with metrics and a phased A/B rollout.</span>
+              <span class="earlier-tech">Product case study</span>
+            </li>
+            <li>
+              <a href="https://github.com/Shaaan2005/alcohol-detection-system-">Alcohol Detection System</a>
+              <span class="earlier-desc">An Arduino circuit that reads an MQ-3 breath sensor and blocks vehicle ignition above a limit.</span>
+              <span class="earlier-tech">Arduino Uno · MQ-3 · C++</span>
+            </li>
+            <li>
+              <a href="https://github.com/Shaaan2005/flood-detection-system">Flood Detection System</a>
+              <span class="earlier-desc">Watches water levels and raises an alert when a threshold is crossed.</span>
+              <span class="earlier-tech">Python</span>
+            </li>
+            <li class="no-link">
+              <span class="earlier-name">Low-Power CEPAL Logic Library</span>
+              <span class="earlier-desc">A low-power 45&nbsp;nm CEPAL logic library designed in Cadence Virtuoso. No public repository.</span>
+              <span class="earlier-tech">Cadence Virtuoso · 45&nbsp;nm</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Experience ========== -->
+    <section class="section" id="experience" aria-labelledby="experience-title">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="section-num" aria-hidden="true">02</p>
+          <h2 id="experience-title">Experience</h2>
+          <p class="section-intro">Internships and education, most recent first.</p>
+        </header>
+
+        <ol class="timeline" data-play>
+          <li class="tl-item">
+            <p class="tl-when">Jun – Jul 2026</p>
+            <div class="tl-body">
+              <h3>Data Science &amp; AI Intern <span class="tl-org">· Info Origin</span></h3>
+              <ul class="tl-points">
+                <li>Built an AI resume-screening system end to end: semantic search over ChromaDB, department detection across 24 job categories, and a Flask web app.</li>
+                <li>Designed the first ranking logic as a 30/70 blend of keyword and semantic scores, then built a benchmark that showed re-ranking hurt quality, so dense retrieval became the default.</li>
+                <li>Replaced a hard-coded category-alias list with a semantic classifier to handle synonyms and non-standard phrasing.</li>
+                <li>Set up fully offline evaluation with RAGAS and a local Llama&nbsp;3 judge. The original pipeline reached 93.33% context recall, with candidate data kept on-premise and no cloud API cost.</li>
+              </ul>
+            </div>
+          </li>
+          <li class="tl-item">
+            <p class="tl-when">Jul 2025</p>
+            <div class="tl-body">
+              <h3>Artificial Intelligence Intern <span class="tl-org">· NTPC (EOC), Noida</span></h3>
+              <ul class="tl-points">
+                <li>Built a smart security camera prototype in Python and OpenCV that detects faces in live video and matches them against known face data.</li>
+              </ul>
+            </div>
+          </li>
+          <li class="tl-item">
+            <p class="tl-when">2023 – 2027</p>
+            <div class="tl-body">
+              <h3>B.Tech, Electronics &amp; Communication Engineering</h3>
+              <p class="tl-org-line">Dr. Shyama Prasad Mukherjee International Institute of Information Technology (IIIT), Naya Raipur</p>
+              <p class="tl-detail"><span class="tl-label">Coursework</span> Data Structures, Machine Learning Algorithms, Probability &amp; Statistics, Database Management Systems, Operating Systems, Object-Oriented Programming</p>
+              <p class="tl-detail"><span class="tl-label">Certifications</span> NPTEL E-Business, IIT Kharagpur: Elite + top 5% (2025) · NPTEL Consumer Behaviour, IIT Kharagpur: Elite (2026)</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ========== About ========== -->
+    <section class="section section-alt" id="about" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <header class="section-head" data-reveal>
+          <p class="section-num" aria-hidden="true">03</p>
+          <h2 id="about-title">About</h2>
+        </header>
+
+        <div class="about-copy" data-reveal>
+          <p class="about-lead">
+            I’m an AI engineer finishing a B.Tech in Electronics and Communication Engineering at IIIT Naya Raipur.
+            I work on systems that search, read and reason over text, and I care about measuring whether they help.
+          </p>
+          <p>
+            I started on the electronics side of my degree, with an Arduino alcohol-detection circuit and a low-power
+            logic library in Cadence Virtuoso. Since then I’ve moved into AI: computer vision during my internship at
+            NTPC, then retrieval and LLM systems at Info Origin.
+          </p>
+          <p>
+            Info Origin is where I started benchmarking my own design choices. The measurements showed that a
+            re-ranking stage I’d added made results worse, so I removed it from the default. I’ve kept that habit
+            since: the job-tracker agent has its own evaluation harness, and the research assistant says so when
+            a paper doesn’t contain the answer instead of guessing.
+          </p>
+          <p>
+            Right now I’m sharpening my data structures and algorithms, and building more around retrieval,
+            LLM agents and evaluation.
+          </p>
+        </div>
+
+        <div class="toolbox" data-reveal>
+          <h3>Tools I’ve used in projects and internships</h3>
+          <dl data-stagger>
+            <div><dt>Languages</dt><dd>Python, SQL, JavaScript, C++ (Arduino), LaTeX</dd></div>
+            <div><dt>AI &amp; retrieval</dt><dd>sentence-transformers, ChromaDB, LangGraph, LangChain, RAGAS, Ollama, scikit-learn</dd></div>
+            <div><dt>Backend</dt><dd>FastAPI, Flask, SQLAlchemy, SQLite, Pydantic</dd></div>
+            <div><dt>Frontend</dt><dd>React, Vite, Streamlit</dd></div>
+            <div><dt>Testing &amp; shipping</dt><dd>pytest, Git, GitHub Actions, Docker, Vercel, Render</dd></div>
+            <div><dt>Hardware &amp; vision</dt><dd>OpenCV, Arduino Uno, sensors, Cadence Virtuoso</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== Contact ========== -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="container contact">
+        <header class="section-head" data-reveal>
+          <p class="section-num" aria-hidden="true">04</p>
+          <h2 id="contact-title">Connect</h2>
+        </header>
+        <div class="contact-body" data-reveal>
+          <p class="contact-lead">
+            I’m based in Noida, India. Whether it’s about an opportunity or one of these projects, email is the
+            best way to reach me. I’m also on LinkedIn, and all my code is on GitHub.
+          </p>
+
+          <div class="contact-email">
+            <a class="contact-link" href="mailto:utbalbharati@gmail.com">
+              <span class="contact-handle">utbalbharati@gmail.com</span>
+              <span class="contact-cta">Send me an email <span aria-hidden="true">→</span></span>
+            </a>
+            <button class="copy-btn" type="button" data-copy="utbalbharati@gmail.com" hidden><span class="copy-label">Copy email address</span></button>
+            <span class="copy-status visually-hidden" role="status" aria-live="polite"></span>
+          </div>
+
+          <ul class="contact-list">
+            <li>
+              <span class="contact-label">LinkedIn</span>
+              <a href="https://www.linkedin.com/in/utkarsh-rai-3236281b4/" rel="me">Connect with me on LinkedIn <span aria-hidden="true">↗</span></a>
+            </li>
+            <li>
+              <span class="contact-label">GitHub</span>
+              <a href="https://github.com/Shaaan2005" rel="me">See all my repositories on GitHub <span aria-hidden="true">↗</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-name">© 2026 Utkarsh Rai</p>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Connect</a></li>
+          <li><a href="mailto:utbalbharati@gmail.com">Email</a></li>
+          <li><a href="https://www.linkedin.com/in/utkarsh-rai-3236281b4/">LinkedIn</a></li>
+          <li><a href="https://github.com/Shaaan2005">GitHub</a></li>
+          <li><a href="#top">Back to top <span aria-hidden="true">↑</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
