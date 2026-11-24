@@ -42,7 +42,7 @@
       var next = root.dataset.theme === "dark" ? "light" : "dark";
       var commit = function () {
         applyTheme(next);
-        try { localStorage.setItem("theme", next); } catch (err) {}
+        try { localStorage.setItem("theme-v2", next); } catch (err) {}
       };
       if (!document.startViewTransition || reduceMQ.matches) { commit(); return; }
 
