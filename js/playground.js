@@ -94,9 +94,18 @@
     if (finePointer) this.trackPointer(canvas.parentElement);
   }
   HeroField.prototype = Object.create(Field.prototype);
+  // Keep the field out from behind the "at a glance" panel so its text stays clean.
+  HeroField.prototype.blocked = function () {
+    var card = document.querySelector(".hero-card");
+    if (!card) return null;
+    var c = this.c.getBoundingClientRect(), r = card.getBoundingClientRect(), pad = 18;
+    return { l: r.left - c.left - pad, t: r.top - c.top - pad, r: r.right - c.left + pad, b: r.bottom - c.top + pad };
+  };
   HeroField.prototype.draw = function (now) {
     var ctx = this.ctx, w = this.w, h = this.h, t = now / 1000, m = this.mouse, R = 180;
     var still = !this.animating();
+    var box = this.blocked();
+    var inBox = function (x, y) { return box && x > box.l && x < box.r && y > box.t && y < box.b; };
     ctx.clearRect(0, 0, w, h);
     var pos = this.pts.map(function (p) {
       var x = p.x * w + (still ? 0 : Math.sin(t * p.s + p.p) * 14);
@@ -106,14 +115,14 @@
         var dx = x - m.x, dy = y - m.y, d = Math.hypot(dx, dy);
         if (d < R) { near = 1 - d / R; x += (dx / (d || 1)) * near * 18; y += (dy / (d || 1)) * near * 18; }
       }
-      return { x: x, y: y, near: near, z: p.z };
+      return { x: x, y: y, near: near, z: p.z, hide: inBox(x, y) };
     });
     // network lines between points close to the cursor
     if (m) {
       for (var i = 0; i < pos.length; i++) {
-        if (!pos[i].near) continue;
+        if (!pos[i].near || pos[i].hide) continue;
         for (var j = i + 1; j < pos.length; j++) {
-          if (!pos[j].near) continue;
+          if (!pos[j].near || pos[j].hide) continue;
           var d = Math.hypot(pos[i].x - pos[j].x, pos[i].y - pos[j].y);
           if (d < 120) {
             ctx.strokeStyle = rgba(C.accent, 0.6 * Math.min(pos[i].near, pos[j].near) * (1 - d / 120) + 0.08);
@@ -124,6 +133,7 @@
       }
     }
     pos.forEach(function (p) {
+      if (p.hide) return;
       ctx.fillStyle = p.near ? rgba(C.accent, 0.45 + p.near * 0.5) : rgba(C.muted, 0.45);
       ctx.beginPath(); ctx.arc(p.x, p.y, 1.6 * p.z + p.near * 1.8, 0, Math.PI * 2); ctx.fill();
     });

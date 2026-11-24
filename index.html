@@ -6,15 +6,15 @@
   <title>Utkarsh Rai — AI engineer</title>
   <meta name="description" content="Utkarsh Rai is an AI engineer and final-year B.Tech ECE student at IIIT Naya Raipur, building retrieval systems, LLM agents and the benchmarks that test them.">
   <meta name="author" content="Utkarsh Rai">
-  <meta name="theme-color" content="#F7F4EE">
+  <meta name="theme-color" content="#0D1117">
   <meta name="color-scheme" content="light dark">
   <script>
-    /* Runs before first paint: enables motion styles and applies the saved or system theme (no flash). */
+    /* Runs before first paint: enables motion styles and applies the saved theme, or Midnight by default (no flash). */
     (function () {
       var d = document.documentElement, t = null;
       d.classList.add("js");
       try { t = localStorage.getItem("theme"); } catch (e) {}
-      if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      if (t !== "light" && t !== "dark") t = "dark";   // Midnight is the default; visitors can switch
       d.dataset.theme = t;
     })();
   </script>

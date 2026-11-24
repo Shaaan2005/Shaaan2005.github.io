@@ -30,7 +30,7 @@
 
   function applyTheme(t) {
     root.dataset.theme = t;
-    if (themeMeta) themeMeta.setAttribute("content", t === "dark" ? "#141311" : "#F7F4EE");
+    if (themeMeta) themeMeta.setAttribute("content", t === "dark" ? "#0D1117" : "#F7F4EE");
     if (themeBtn) themeBtn.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark theme");
   }
 
@@ -59,12 +59,6 @@
       });
     });
 
-    // Follow the system setting until the visitor picks a theme themselves.
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (mq) {
-      var saved = null;
-      try { saved = localStorage.getItem("theme"); } catch (err) {}
-      if (!saved) applyTheme(mq.matches ? "dark" : "light");
-    });
   }
 
   /* ---------- Mobile navigation ---------- */
