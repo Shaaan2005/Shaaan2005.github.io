@@ -980,3 +980,41 @@ html, body { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .demo-frame.is-playing::after { animation: none; opacity: 0; }
 }
+
+
+/* =========================================================
+   About portrait: unveiled by a soft wipe, then drifts in its frame with the scroll,
+   and (mouse only) tilts toward the pointer with a light sheen. js/main.js sets
+   --pp (scroll progress, -1..1), --rx/--ry (tilt) and --gx/--gy (sheen position).
+   ========================================================= */
+.js .portrait[data-reveal] { transform: none; }            /* the wipe replaces the usual rise */
+.js .portrait .portrait-frame {
+  clip-path: inset(100% 0 0 0 round 18px);
+  transition: clip-path 1.1s var(--ease-io) .1s, transform .6s var(--ease-out);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+.js .portrait.is-in .portrait-frame { clip-path: inset(0 0 0 0 round 18px); }
+.js .portrait .portrait-img {
+  transform: translateY(calc(var(--pp, 0) * -3.5%)) scale(1.16);
+  transition: transform 1.6s var(--ease-out);
+}
+.js .portrait.is-in .portrait-img { transform: translateY(calc(var(--pp, 0) * -3.5%)) scale(1.08); }
+.js .portrait.is-scrolling .portrait-img { transition: transform .15s linear; }
+.portrait-frame::after {                                      /* sheen, only visible while tilting */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 0%), rgb(255 255 255 / .22), transparent 55%);
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity .4s var(--ease-out);
+}
+.portrait.is-tilting .portrait-frame::after { opacity: 1; }
+.portrait.is-tilting .portrait-frame { transition: clip-path 1.1s var(--ease-io), transform .12s linear; }
+@media (prefers-reduced-motion: reduce) {
+  .js .portrait .portrait-frame { clip-path: none !important; transform: none !important; }
+  .js .portrait .portrait-img { transform: none !important; }
+  .portrait-frame::after { display: none; }
+}
+@media print { .js .portrait .portrait-frame { clip-path: none; } }

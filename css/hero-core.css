@@ -186,7 +186,7 @@
   flex: none;
   width: 5rem;
   height: 5rem;
-  border-radius: 50%;
+  border-radius: 26%;
   overflow: hidden;
   background: var(--bg-alt);
   box-shadow: 0 0 0 3px var(--bg), 0 0 0 4px var(--rule-strong), var(--shadow);
@@ -611,7 +611,7 @@
   display: block;
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: 26%;
   background: none;
   cursor: pointer;
 }
@@ -621,7 +621,7 @@
 .avatar-btn:hover img,
 .avatar-btn[aria-expanded="true"] img { transform: scale(1.08); }
 
-/* The ring: an accent circle that draws itself once, then turns a little on hover. */
+/* The ring: an accent outline that draws itself once; on hover a gap opens and travels round. */
 .avatar-ring {
   position: absolute;
   top: -7px;
@@ -630,26 +630,22 @@
   height: calc(100% + 14px);
   max-width: none;                      /* the site-wide svg { max-width: 100% } would shrink and offset it */
   overflow: visible;
-  transform: rotate(-90deg);
-  transition: transform .8s var(--ease-out);
   pointer-events: none;
 }
-.avatar-ring circle {
+.avatar-ring rect {
   fill: none;
   stroke: var(--accent);
   stroke-width: 1.4;
   stroke-linecap: round;
-  stroke-dasharray: 1 1;                /* at rest: one complete, quiet ring */
+  stroke-dasharray: 1 1;                /* at rest: one complete, quiet outline */
   stroke-dashoffset: 1;
   opacity: 0;
   transition: stroke-dashoffset 1.3s var(--ease-io), stroke-dasharray .6s var(--ease-out), stroke-width .3s var(--ease-out), opacity .3s;
 }
-.profile.is-drawn .avatar-ring circle { stroke-dashoffset: 0; opacity: .55; }
+.profile.is-drawn .avatar-ring rect { stroke-dashoffset: 0; opacity: .55; }
 /* on hover (or while the card is open) the ring opens a gap, brightens and turns */
-.avatar-btn:hover .avatar-ring circle,
-.avatar-btn[aria-expanded="true"] .avatar-ring circle { stroke-dasharray: .72 .28; stroke-width: 1.8; opacity: 1; }
-.avatar-btn:hover .avatar-ring,
-.avatar-btn[aria-expanded="true"] .avatar-ring { transform: rotate(90deg); }
+.avatar-btn:hover .avatar-ring rect,
+.avatar-btn[aria-expanded="true"] .avatar-ring rect { stroke-dasharray: .72 .28; stroke-dashoffset: -.36; stroke-width: 1.8; opacity: 1; transition-duration: .9s, .6s, .3s, .3s; }
 /* the ring replaces the plain outline */
 .avatar-btn .hero-avatar { box-shadow: 0 0 0 3px var(--bg), var(--shadow); }
 
@@ -696,7 +692,7 @@
 .profile-card.is-open .pc-row { opacity: 1; transform: none; }
 
 .pc-head { display: flex; align-items: center; gap: var(--s-3); }
-.pc-photo { width: 3.5rem; height: 3.5rem; border-radius: 50%; object-fit: cover; flex: none; }
+.pc-photo { width: 3.5rem; height: 3.5rem; border-radius: 26%; object-fit: cover; flex: none; }
 .pc-name { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.2; color: var(--ink); }
 .pc-role { font-size: var(--fs-xs); color: var(--muted); }
 
@@ -736,5 +732,5 @@
 .pc-links a:hover { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-wash); }
 
 @media (prefers-reduced-motion: reduce) {
-  .profile-card, .pc-row, .avatar-ring, .avatar-ring circle, .avatar-btn img { transition: none !important; }
+  .profile-card, .pc-row, .avatar-ring, .avatar-ring rect, .avatar-btn img { transition: none !important; }
 }

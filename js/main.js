@@ -445,6 +445,42 @@
     addScrollFx(grid, updateStack);
   }
 
+  /* ---------- About portrait: scroll drift and pointer tilt ---------- */
+  var portrait = document.querySelector(".portrait");
+  if (portrait && !reduceMQ.matches) {
+    var pFrame = portrait.querySelector(".portrait-frame"), scrollIdle = 0;
+    // The photo drifts gently inside its frame as the section passes through the viewport.
+    addScrollFx(portrait, function () {
+      var r = portrait.getBoundingClientRect();
+      var pp = Math.max(-1, Math.min(1, ((r.top + r.height / 2) - innerHeight / 2) / innerHeight));
+      portrait.style.setProperty("--pp", pp.toFixed(3));
+      portrait.classList.add("is-scrolling");
+      clearTimeout(scrollIdle);
+      scrollIdle = setTimeout(function () { portrait.classList.remove("is-scrolling"); }, 160);
+    });
+    if (finePointer) {
+      var tiltRaf = 0;
+      pFrame.addEventListener("pointermove", function (e) {
+        if (e.pointerType !== "mouse") return;
+        cancelAnimationFrame(tiltRaf);
+        tiltRaf = requestAnimationFrame(function () {
+          var b = pFrame.getBoundingClientRect(), x = (e.clientX - b.left) / b.width, y = (e.clientY - b.top) / b.height;
+          portrait.classList.add("is-tilting");
+          pFrame.style.setProperty("--ry", ((x - 0.5) * 7).toFixed(2) + "deg");
+          pFrame.style.setProperty("--rx", ((0.5 - y) * 7).toFixed(2) + "deg");
+          pFrame.style.setProperty("--gx", (x * 100).toFixed(1) + "%");
+          pFrame.style.setProperty("--gy", (y * 100).toFixed(1) + "%");
+        });
+      });
+      pFrame.addEventListener("pointerleave", function () {
+        cancelAnimationFrame(tiltRaf);
+        portrait.classList.remove("is-tilting");
+        pFrame.style.setProperty("--rx", "0deg");
+        pFrame.style.setProperty("--ry", "0deg");
+      });
+    }
+  }
+
   if (scrollFx.length) {
     var fxTicking = false;
     var runFx = function () {
@@ -551,7 +587,7 @@
     btn.setAttribute("aria-expanded", "false");
     btn.setAttribute("aria-controls", "profile-card");
     btn.setAttribute("aria-label", "Show Utkarsh Rai's profile card");
-    btn.innerHTML = '<svg class="avatar-ring" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="48" pathLength="1"/></svg>';
+    btn.innerHTML = '<svg class="avatar-ring" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="2" y="2" width="96" height="96" rx="29" pathLength="1"/></svg>';
     profile.insertBefore(btn, photo);
     btn.appendChild(photo);
     photo.querySelector("img").alt = ""; // the button's label names it now
