@@ -205,6 +205,8 @@
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         var el = entry.target;
+        // Staggered --d delays only choreograph the first view; anything reached later by scrolling appears at once.
+        if (performance.now() > 1500) el.style.setProperty("--d", "0s");
         el.classList.add("is-in");
         revealObs.unobserve(el);
         var delay = parseFloat(getComputedStyle(el).getPropertyValue("--d")) || 0;
