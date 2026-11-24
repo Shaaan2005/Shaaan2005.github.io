@@ -62,22 +62,22 @@
 }
 
 /* Dark theme: its own steps, contrast-checked against the dark surfaces (not an automatic invert) */
-:root[data-theme="dark"] {      /* "Midnight": the default theme */
-  --bg: #0D1117;
-  --bg-alt: #121823;
-  --surface: #141B26;
-  --ink: #E8EDF4;
-  --ink-2: #B4BECB;
-  --muted: #8893A3;
-  --rule: #222B38;
-  --rule-strong: #334052;
-  --accent: #FF7A59;
-  --accent-ink: #FF9C82;
-  --accent-wash: #2A1A17;
-  --bar-muted: #55606F;
-  --on-accent: #0D1117;
-  --glow-warm: rgba(255, 122, 89, .20);
-  --glow-cool: rgba(90, 120, 255, .16);
+:root[data-theme="dark"] {      /* "Electric Night": the dark version of Electric */
+  --bg: #0E1124;
+  --bg-alt: #141838;
+  --surface: #161A3A;
+  --ink: #EEF0FA;
+  --ink-2: #C3C8E2;
+  --muted: #9298B8;
+  --rule: #242A4D;
+  --rule-strong: #353B63;
+  --accent: #8B85FF;
+  --accent-ink: #A5A0FF;
+  --accent-wash: #22204A;
+  --bar-muted: #5A6088;
+  --on-accent: #0E1124;
+  --glow-warm: rgba(124, 116, 255, .24);
+  --glow-cool: rgba(56, 189, 248, .14);
   --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 18px 40px -16px rgba(0, 0, 0, .7);
   color-scheme: dark;
 }
@@ -1386,16 +1386,16 @@ a:hover { color: var(--accent-ink); text-decoration-color: currentColor; }
   color: var(--ink);
 }
 :root[data-theme="dark"] .band-invert {
-  --bg: #080B10;
-  --bg-alt: #0E131B;
-  --surface: #111720;
-  --ink: #E8EDF4;
-  --ink-2: #B4BECB;
-  --muted: #8893A3;
-  --rule: #1C2430;
-  --rule-strong: #2C3746;
-  --accent: #FF7A59;
-  --accent-ink: #FF9C82;
+  --bg: #080A1A;
+  --bg-alt: #0E1124;
+  --surface: #11142C;
+  --ink: #EEF0FA;
+  --ink-2: #C3C8E2;
+  --muted: #9298B8;
+  --rule: #1C2142;
+  --rule-strong: #2C3258;
+  --accent: #8B85FF;
+  --accent-ink: #A5A0FF;
 }
 .section.band-invert { border-top-color: transparent; }
 .site-footer.band-invert { border-top-color: var(--rule); }
@@ -1447,7 +1447,7 @@ a:hover { color: var(--accent-ink); text-decoration-color: currentColor; }
 }
 
 
-/* ---------- Glows behind the hero (Electric: indigo + sky; Midnight: coral + blue) ---------- */
+/* ---------- Glows behind the hero (Electric and Electric Night: indigo + sky) ---------- */
 .hero::before,
 .hero::after {
   content: "";
