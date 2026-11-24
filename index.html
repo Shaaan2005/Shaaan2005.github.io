@@ -327,12 +327,13 @@
               discussions can draw on them. It’s deployed as a web app and installable PWA. I built it on my own.
             </p>
             <ul class="tags" aria-label="Technologies used">
-              <li>FastAPI</li><li>LangGraph</li><li>ChromaDB</li><li>SQLAlchemy</li><li>JWT auth</li><li>React</li><li>Vite</li><li>Ollama / OpenAI</li>
+              <li>FastAPI</li><li>LangGraph</li><li>ChromaDB</li><li>SQLAlchemy</li><li>JWT auth</li><li>React</li><li>Vite</li><li>OpenAI / Groq / Gemini</li>
             </ul>
             <div class="links">
               <a class="link-arrow" href="https://decisionos-ai-boardroom.vercel.app">Try the DecisionOS live app <span aria-hidden="true">↗</span></a>
               <a class="link-arrow" href="https://github.com/Shaaan2005/decisionos-ai-boardroom">DecisionOS repository <span aria-hidden="true">↗</span></a>
             </div>
+            <p class="link-note">Without an API key the live demo uses built-in template answers. Add your own OpenAI, Groq or Gemini key in the app for real model output.</p>
           </article>
 
           <!-- Job Tracker Agent -->
@@ -358,8 +359,8 @@
             <p>
               I wrote the agent loop by hand instead of using a framework. LLM output is validated with Pydantic,
               skill matching is plain Python so scores stay deterministic, and every agent step is logged.
-              On 12 hand-labeled synthetic postings, skill extraction scored 0.99 precision and 0.93 recall.
-              That’s a small, synthetic test set.
+              On 13 hand-labeled postings (mostly synthetic), it scored 0.91 precision and 0.98 recall with
+              local Llama&nbsp;3. The evaluation also caught a crash on unexpected LLM output, which I fixed.
             </p>
             <ul class="tags" aria-label="Technologies used">
               <li>Python</li><li>FastAPI</li><li>Pydantic</li><li>SQLAlchemy</li><li>SQLite</li><li>Ollama · Llama&nbsp;3</li><li>pytest</li><li>Docker</li>
