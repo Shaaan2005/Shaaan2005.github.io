@@ -457,3 +457,132 @@
   border-radius: 3px;
   opacity: 0.7;
 }
+
+/* =========================================================
+   Signature interactions: hero field, search playground, card tilt
+   ========================================================= */
+html, body { overflow-x: clip; }
+
+/* ---------- Hero ambient field ---------- */
+.hero { position: relative; isolation: isolate; }
+.hero-text, .hero-card { position: relative; z-index: 1; }
+.hero-field {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  height: 100%;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  /* fade out behind the headline so text stays crisp */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 50%, #000 64%);
+          mask-image: linear-gradient(90deg, transparent 0%, transparent 50%, #000 64%);
+}
+/* The "at a glance" panel sits on a page-coloured backdrop so the field never runs behind its text */
+.hero-card { background: var(--bg); box-shadow: 0 0 0 18px var(--bg); border-radius: 2px; }
+@media (max-width: 64rem) {
+  .hero-field {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.25) 45%, #000 85%);
+            mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.25) 45%, #000 85%);
+  }
+}
+
+/* ---------- Search playground ---------- */
+.playground { display: none; border-top: 1px solid var(--rule); padding-block: var(--s-8); }
+.js .playground { display: block; }
+.pg-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-areas: "head stage" "controls stage";
+  grid-template-rows: auto 1fr;
+  column-gap: var(--s-7);
+  align-items: start;
+}
+.pg-head { grid-area: head; align-self: end; }
+.pg-controls { grid-area: controls; }
+.pg-stage { grid-area: stage; align-self: center; }
+.pg-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.875rem, 1.5rem + 1.4vw, 2.625rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+.pg-title em { color: var(--accent); }
+.pg-lede { margin-top: var(--s-4); color: var(--ink-2); max-width: 32rem; }
+
+.pg-chips { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-5); }
+.pg-chip,
+.pg-mode {
+  min-height: 40px;
+  padding: 0 0.95rem;
+  font: inherit;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color .2s var(--ease-out), color .2s var(--ease-out), border-color .2s, transform .3s var(--ease-out);
+}
+.pg-chip:hover, .pg-mode:hover { border-color: var(--ink); }
+.pg-chip:active, .pg-mode:active { transform: scale(.96); }
+.pg-chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.pg-modes {
+  display: inline-flex;
+  gap: 2px;
+  margin-top: var(--s-4);
+  padding: 3px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+}
+.pg-mode { min-height: 34px; border: 0; background: transparent; font-family: var(--font-mono); font-size: 0.75rem; }
+.pg-mode[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+
+.pg-result { margin-top: var(--s-4); min-height: 3.2em; font-size: var(--fs-sm); color: var(--ink-2); }
+.pg-note { margin-top: var(--s-2); font-size: var(--fs-xs); color: var(--muted); }
+
+.pg-stage {
+  position: relative;
+  height: 420px;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--rule-strong) 55%, transparent) 1px, transparent 0) 0 0 / 22px 22px,
+    var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.pg-canvas { display: block; width: 100%; height: 100%; touch-action: manipulation; }
+.pg-hint {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--muted);
+  pointer-events: none;
+}
+@media (hover: none) { .pg-hint { display: none; } }
+
+@media (max-width: 64rem) {
+  .pg-grid { grid-template-columns: 1fr; grid-template-areas: "head" "stage" "controls"; grid-template-rows: auto; row-gap: var(--s-5); }
+  .pg-controls .pg-chips { margin-top: 0; }
+  .pg-stage { height: 360px; }
+}
+@media (max-width: 48rem) {
+  .playground { padding-block: var(--s-7); }
+  .pg-stage { height: 320px; }
+}
+
+/* ---------- 3D tilt on project cards (mouse only; JS sets --rx/--ry) ---------- */
+.js .project.is-done:hover {
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px);
+}
+.js .project.is-done { transition: transform .5s var(--ease-out), box-shadow .45s var(--ease-out), border-color var(--dur-1); will-change: transform; }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .js .project.is-done:hover { transform: none; }
+}

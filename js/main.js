@@ -324,6 +324,23 @@
     });
   }
 
+  /* ---------- 3D tilt on project cards (mouse only) ---------- */
+  if (finePointer && !reduceMQ.matches) {
+    each(document.querySelectorAll(".project"), function (card) {
+      card.addEventListener("pointermove", function (e) {
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.setProperty("--ry", (x * 5).toFixed(2) + "deg");
+        card.style.setProperty("--rx", (-y * 4).toFixed(2) + "deg");
+      });
+      card.addEventListener("pointerleave", function () {
+        card.style.removeProperty("--rx");
+        card.style.removeProperty("--ry");
+      });
+    });
+  }
+
   /* ---------- Copy email address ---------- */
   var copyBtn = document.querySelector(".copy-btn");
   if (copyBtn && navigator.clipboard && window.isSecureContext) {

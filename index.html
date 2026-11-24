@@ -40,6 +40,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/motion.css">
   <script src="js/main.js" defer></script>
+  <script src="js/playground.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -83,6 +84,7 @@
   <main id="main">
     <!-- ========== Hero ========== -->
     <section class="hero container" aria-labelledby="hero-title">
+      <canvas class="hero-field" aria-hidden="true"></canvas>
       <div class="hero-text">
         <p class="eyebrow" data-reveal>AI engineer · B.Tech ECE, IIIT Naya Raipur · Class of 2027</p>
         <h1 id="hero-title" class="hero-title">I build practical AI software, <em>and then check whether it actually <span class="nowrap">works.<svg class="hero-check" viewBox="0 0 48 40" aria-hidden="true" focusable="false"><path pathLength="1" d="M4 22 C 10 26, 14 31, 18 35 C 24 24, 33 12, 44 4"/></svg></span></em></h1>
@@ -124,6 +126,38 @@
           </div>
         </dl>
       </aside>
+    </section>
+
+    <!-- ========== Playground ========== -->
+    <section class="playground" aria-labelledby="pg-title">
+      <div class="container pg-grid">
+        <div class="pg-head" data-reveal>
+          <p class="kicker"><span class="kicker-accent">Try it</span> · The idea behind my resume search</p>
+          <h2 id="pg-title" class="pg-title">Search by meaning, <em>not keywords.</em></h2>
+          <p class="pg-lede">
+            Each dot is a resume, placed by what it says. Pick a query: the resumes closest in meaning light up,
+            even if they never use your exact words. Then switch to exact keywords and see who gets missed.
+          </p>
+        </div>
+        <div class="pg-controls" data-reveal style="--d:.1s">
+          <div class="pg-chips" role="group" aria-label="Choose a query">
+            <button type="button" class="pg-chip" data-cluster="0" aria-pressed="false">“handles payroll and taxes”</button>
+            <button type="button" class="pg-chip" data-cluster="1" aria-pressed="false">“builds web apps in Python”</button>
+            <button type="button" class="pg-chip" data-cluster="2" aria-pressed="false">“cares for patients on a ward”</button>
+            <button type="button" class="pg-chip" data-cluster="3" aria-pressed="false">“creates brand visuals”</button>
+          </div>
+          <div class="pg-modes" role="group" aria-label="Search method">
+            <button type="button" class="pg-mode" data-mode="meaning" aria-pressed="true">By meaning</button>
+            <button type="button" class="pg-mode" data-mode="keyword" aria-pressed="false">Exact keywords</button>
+          </div>
+          <p class="pg-result" aria-live="polite">Pick a query to see the closest resumes.</p>
+          <p class="pg-note">An illustration of how the featured project works, not live data.</p>
+        </div>
+        <div class="pg-stage" data-reveal style="--d:.15s">
+          <canvas class="pg-canvas" aria-hidden="true"></canvas>
+          <p class="pg-hint" aria-hidden="true">Hover a dot</p>
+        </div>
+      </div>
     </section>
 
     <!-- ========== Work ========== -->

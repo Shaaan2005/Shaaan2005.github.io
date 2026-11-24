@@ -6,7 +6,8 @@ A one-page portfolio site built with plain HTML, CSS and a little JavaScript. Th
 index.html          page content (all sections)
 css/styles.css      design tokens (light + dark), layout, components, responsive rules
 css/motion.css      animations and interactions (reveals, project visuals, theme toggle)
-js/main.js          menu, theme toggle, scroll reveals, project visuals, chart, copy button
+js/main.js          menu, theme toggle, scroll reveals, project visuals, chart, card tilt, copy button
+js/playground.js    canvas animations: hero field and the "search by meaning" playground
 assets/             favicon and the resume-screening demo clip + poster
 .nojekyll           tells GitHub Pages to serve files as-is
 ```
