@@ -149,12 +149,18 @@
 
           <figure class="demo" data-reveal>
             <div class="demo-frame">
+              <div class="demo-bar" aria-hidden="true">
+                <span class="demo-dots"><i></i><i></i><i></i></span>
+                <span class="demo-url">localhost:5000 · AI Resume Screening</span>
+              </div>
+              <div class="demo-screen">
               <video controls muted playsinline preload="none" width="1280" height="800"
                      poster="assets/resume-screening-demo-poster.jpg"
                      aria-describedby="demo-caption">
                 <source src="assets/resume-screening-demo.mp4" type="video/mp4">
                 <a href="https://github.com/Shaaan2005/AI-Resume-Screening-and-RAG-Evaluation-System#-demo-walkthrough">Watch the demo walkthrough on GitHub</a>
               </video>
+              </div>
             </div>
             <figcaption id="demo-caption">
               Demo recording at 2× speed (21&nbsp;s, no sound): a semantic search across the 242 sample resumes,
@@ -162,45 +168,18 @@
             </figcaption>
           </figure>
 
-          <ol class="pipeline" aria-label="How a search works" data-play>
-            <li><span class="step-n">1</span><span class="step-t">Extract text</span><span class="step-d">PDF &amp; DOCX</span></li>
-            <li><span class="step-n">2</span><span class="step-t">Chunk</span><span class="step-d">200-word pieces</span></li>
-            <li><span class="step-n">3</span><span class="step-t">Embed</span><span class="step-d">all-mpnet-base-v2</span></li>
-            <li><span class="step-n">4</span><span class="step-t">Store</span><span class="step-d">ChromaDB, cosine</span></li>
-            <li><span class="step-n">5</span><span class="step-t">Detect department</span><span class="step-d">cross-encoder</span></li>
-            <li><span class="step-n">6</span><span class="step-t">Rank</span><span class="step-d">best-matching chunk</span></li>
-          </ol>
-
           <div class="featured-grid">
             <div class="featured-copy">
-              <h4>The problem</h4>
-              <p>
-                Keyword-based screening misses candidates who describe the same skill in different words.
-                And resumes are personal data, so I didn’t want to send them to a cloud API.
-              </p>
-
               <h4>What it does</h4>
               <p>
-                A Flask app with sign-in, resume upload and semantic search. A query like “accountant with
-                payroll experience” is matched to one of 24 job departments, then resumes in that department
-                are ranked by their best-matching passage. Each result gets a SHORTLIST, CONSIDER or REJECT
-                verdict based on how far its score sits above the rest of the pool.
+                Matches a recruiter’s query, like “accountant with payroll experience”, to one of 24 job departments,
+                then ranks resumes by their best-matching passage. Text extraction, embeddings and search all run on
+                the host machine, so resumes never go to a cloud API.
               </p>
-
-              <h4>Privacy-first by design</h4>
-              <p>
-                Text extraction, embeddings and vector search all run on the host machine. The optional
-                LLM-judged evaluation (RAGAS) can use Llama&nbsp;3 locally through Ollama, so no cloud
-                service is needed. Uploads are checked by file signature and size, and forms are protected
-                with CSRF tokens.
-              </p>
-
               <h4>My role</h4>
               <p>
-                I designed and built the first version during my internship at Info Origin, then kept
-                improving it afterwards: the benchmark, the new ranking default and the test suite came
-                later. I’m the only contributor to the repository, and its 107 tests run on every push
-                through GitHub Actions.
+                I built the first version during my internship at Info Origin, then added the benchmark, the new
+                ranking default and 107 CI tests afterwards. I’m the only contributor.
               </p>
             </div>
 
@@ -249,6 +228,8 @@
                 default and available as an option.
               </p>
 
+              <p class="bench-limit">Small test set, and relevance is judged by job category, not hiring outcomes. Full limits are in the case study below.</p>
+
               <details class="bench-table">
                 <summary>Show all benchmark numbers as a table</summary>
                 <div class="table-wrap">
@@ -270,21 +251,53 @@
             </figure>
           </div>
 
-          <div class="limits" data-reveal>
-            <h4>What these numbers don’t show</h4>
-            <ul>
-              <li>48 queries is a small test set.</li>
-              <li>A result counts as relevant if it comes from the query’s job category, so the benchmark can’t judge ordering <em>within</em> a department (say, Python vs. Java engineers).</li>
-              <li>The resumes are a public Kaggle sample (CC0), not a real applicant pool.</li>
-              <li>These are retrieval scores. They don’t measure real-world hiring quality or fairness, and the tool is meant to support a recruiter’s judgment, not replace it.</li>
-            </ul>
-          </div>
+          <details class="case-study" id="case-study">
+            <summary>
+              <span class="cs-title">Read the full case study</span>
+              <span class="cs-meta">Pipeline · privacy · limits · full stack</span>
+              <span class="cs-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="cs-body">
+              <h4 class="cs-h">How a search works</h4>
+              <ol class="pipeline" aria-label="How a search works" data-play>
+              <li><span class="step-n">1</span><span class="step-t">Extract text</span><span class="step-d">PDF &amp; DOCX</span></li>
+              <li><span class="step-n">2</span><span class="step-t">Chunk</span><span class="step-d">200-word pieces</span></li>
+              <li><span class="step-n">3</span><span class="step-t">Embed</span><span class="step-d">all-mpnet-base-v2</span></li>
+              <li><span class="step-n">4</span><span class="step-t">Store</span><span class="step-d">ChromaDB, cosine</span></li>
+              <li><span class="step-n">5</span><span class="step-t">Detect department</span><span class="step-d">cross-encoder</span></li>
+              <li><span class="step-n">6</span><span class="step-t">Rank</span><span class="step-d">best-matching chunk</span></li>
+              </ol>
 
-          <div class="featured-foot">
-            <ul class="tags" aria-label="Technologies used">
+              <div class="cs-cols">
+                <div>
+                  <h4 class="cs-h">The problem</h4>
+                  <p>Keyword-based screening misses candidates who describe the same skill in different words, and resumes are personal data that shouldn’t go to a cloud API.</p>
+                </div>
+                <div>
+                  <h4 class="cs-h">Privacy and safety</h4>
+                  <p>Everything runs locally; the optional LLM-judged evaluation (RAGAS) can use Llama&nbsp;3 through Ollama. Uploads are checked by file signature and size, and forms use CSRF tokens.</p>
+                </div>
+              </div>
+
+              <div class="limits">
+                <h4>What these numbers don’t show</h4>
+                <ul>
+                  <li>48 queries is a small test set.</li>
+                  <li>A result counts as relevant if it comes from the query’s job category, so the benchmark can’t judge ordering <em>within</em> a department (say, Python vs. Java engineers).</li>
+                  <li>The resumes are a public Kaggle sample (CC0), not a real applicant pool.</li>
+                  <li>These are retrieval scores. They don’t measure real-world hiring quality or fairness, and the tool is meant to support a recruiter’s judgment, not replace it.</li>
+                </ul>
+              </div>
+
+              <h4 class="cs-h">Full stack</h4>
+              <ul class="tags" aria-label="Technologies used">
               <li>Python</li><li>Flask</li><li>SQLite</li><li>ChromaDB</li><li>sentence-transformers</li>
               <li>Cross-encoders</li><li>RAGAS</li><li>Ollama · Llama&nbsp;3</li><li>pytest</li><li>GitHub Actions</li><li>Docker</li>
-            </ul>
+              </ul>
+            </div>
+          </details>
+
+          <div class="featured-foot">
             <div class="links">
               <a class="link-arrow" href="https://github.com/Shaaan2005/AI-Resume-Screening-and-RAG-Evaluation-System">AI Resume Screening repository <span aria-hidden="true">↗</span></a>
               <a class="link-arrow" href="https://github.com/Shaaan2005/AI-Resume-Screening-and-RAG-Evaluation-System/blob/main/benchmark/RESULTS.md">Full benchmark results <span aria-hidden="true">↗</span></a>
@@ -318,22 +331,18 @@
             <p class="kicker">Full-stack · Multi-agent LLM app</p>
             <h3 id="p-decisionos">DecisionOS: an AI boardroom</h3>
             <p>
-              A single chatbot tends to agree with whoever is asking. DecisionOS instead runs a structured debate
-              between five advisor agents (CEO, CFO, CTO, risk analyst and mentor), and a chairman agent then
-              writes the verdict, confidence score, key risks and an action plan.
-            </p>
-            <p>
-              Debates are orchestrated with LangGraph, and past decisions are kept in ChromaDB so later
-              discussions can draw on them. It’s deployed as a web app and installable PWA. I built it on my own.
+              A single chatbot tends to agree with whoever asks. Here, five advisor agents debate your decision
+              in a LangGraph workflow, and a chairman agent writes the verdict, risks and an action plan.
+              Past decisions are kept in ChromaDB memory. Built solo.
             </p>
             <ul class="tags" aria-label="Technologies used">
-              <li>FastAPI</li><li>LangGraph</li><li>ChromaDB</li><li>SQLAlchemy</li><li>JWT auth</li><li>React</li><li>Vite</li><li>OpenAI / Groq / Gemini</li>
+              <li>LangGraph</li><li>FastAPI</li><li>ChromaDB</li><li>React</li>
             </ul>
             <div class="links">
               <a class="link-arrow" href="https://decisionos-ai-boardroom.vercel.app">Try the DecisionOS live app <span aria-hidden="true">↗</span></a>
               <a class="link-arrow" href="https://github.com/Shaaan2005/decisionos-ai-boardroom">DecisionOS repository <span aria-hidden="true">↗</span></a>
             </div>
-            <p class="link-note">Without an API key the live demo uses built-in template answers. Add your own OpenAI, Groq or Gemini key in the app for real model output.</p>
+            <p class="link-note">The demo gives template answers unless you add your own OpenAI, Groq or Gemini key.</p>
           </article>
 
           <!-- Job Tracker Agent -->
@@ -352,24 +361,19 @@
             <p class="kicker">Backend · Tool-calling agent</p>
             <h3 id="p-jobtracker">Job Tracker Agent</h3>
             <p>
-              Paste a job posting (text or a URL) and a local Llama&nbsp;3 agent extracts the company, role,
-              deadline and required skills, compares them with your skills profile and saves the application.
-              You manage everything through a REST API.
+              Paste a job posting and a local Llama&nbsp;3 agent extracts the role and required skills, compares
+              them with your profile and saves the application. The agent loop is hand-written, with
+              Pydantic-validated output and deterministic skill matching.
             </p>
-            <p>
-              I wrote the agent loop by hand instead of using a framework. LLM output is validated with Pydantic,
-              skill matching is plain Python so scores stay deterministic, and every agent step is logged.
-              On 13 hand-labeled postings (mostly synthetic), it scored 0.91 precision and 0.98 recall with
-              local Llama&nbsp;3. The evaluation also caught a crash on unexpected LLM output, which I fixed.
-            </p>
+            <p class="metric-line"><strong>0.91</strong> precision · <strong>0.98</strong> recall on 13 labeled postings. The evaluation also caught a crash, which I fixed.</p>
             <ul class="tags" aria-label="Technologies used">
-              <li>Python</li><li>FastAPI</li><li>Pydantic</li><li>SQLAlchemy</li><li>SQLite</li><li>Ollama · Llama&nbsp;3</li><li>pytest</li><li>Docker</li>
+              <li>FastAPI</li><li>Pydantic</li><li>Ollama · Llama&nbsp;3</li><li>pytest</li>
             </ul>
             <div class="links">
               <a class="link-arrow" href="https://job-tracker-agent-twrl.onrender.com/docs">Try the Job Tracker API live <span aria-hidden="true">↗</span></a>
               <a class="link-arrow" href="https://github.com/Shaaan2005/job-tracker-agent">Job Tracker Agent repository <span aria-hidden="true">↗</span></a>
             </div>
-            <p class="link-note">The live demo runs on a free host and can take up to a minute to wake up.</p>
+            <p class="link-note">Free hosting: the demo can take up to a minute to wake up.</p>
           </article>
 
           <!-- Research Assistant -->
@@ -385,17 +389,12 @@
             <p class="kicker">AI · Retrieval-augmented generation</p>
             <h3 id="p-research">Multi-Agent Research Assistant</h3>
             <p>
-              Reading research papers end to end takes a long time, and plain chatbots often misquote them.
-              This Streamlit app splits a paper into page-tagged chunks, and separate agents summarize it,
-              break down its methods, datasets and limitations, and answer questions with page citations.
-            </p>
-            <p>
-              If the paper doesn’t contain the answer, the app says so instead of guessing. I built it for a
-              midterm project evaluation and wrote an accompanying report in LaTeX. Comparing several papers
-              at once is planned next.
+              Ask questions about a research paper and get answers with page citations, or “Not found in the
+              provided paper” when the evidence isn’t there. Separate agents summarize the paper, break down its
+              methods and limitations, and answer questions. Built for a midterm project evaluation.
             </p>
             <ul class="tags" aria-label="Technologies used">
-              <li>Python</li><li>Streamlit</li><li>pypdf</li><li>scikit-learn (TF-IDF)</li><li>ChromaDB (optional)</li><li>Groq / OpenAI / Ollama</li>
+              <li>Streamlit</li><li>pypdf</li><li>scikit-learn</li><li>Groq / OpenAI / Ollama</li>
             </ul>
             <div class="links">
               <a class="link-arrow" href="https://github.com/Shaaan2005/Multi-Agent-AI-Research-Assistant-for-Scientific-Paper-Analysis">Research Assistant repository <span aria-hidden="true">↗</span></a>
@@ -491,15 +490,17 @@
           <h2 id="about-title">About</h2>
         </header>
 
+        <ol class="path" aria-label="My path into AI" data-play>
+          <li><span class="path-when">2023</span><span class="path-what">Electronics</span><span class="path-detail">Arduino circuits and 45&nbsp;nm logic design</span></li>
+          <li><span class="path-when">2025</span><span class="path-what">Computer vision</span><span class="path-detail">Face recognition at NTPC</span></li>
+          <li><span class="path-when">2026</span><span class="path-what">Retrieval &amp; LLMs</span><span class="path-detail">Semantic search at Info Origin</span></li>
+          <li class="is-now"><span class="path-when">Now</span><span class="path-what">Agents &amp; evaluation</span><span class="path-detail">Measuring what AI systems actually do</span></li>
+        </ol>
+
         <div class="about-copy" data-reveal>
           <p class="about-lead">
             I’m an AI engineer finishing a B.Tech in Electronics and Communication Engineering at IIIT Naya Raipur.
             I work on systems that search, read and reason over text, and I care about measuring whether they help.
-          </p>
-          <p>
-            I started on the electronics side of my degree, with an Arduino alcohol-detection circuit and a low-power
-            logic library in Cadence Virtuoso. Since then I’ve moved into AI: computer vision during my internship at
-            NTPC, then retrieval and LLM systems at Info Origin.
           </p>
           <p>
             After the internship I kept working on that system and built a benchmark to test my own design
@@ -528,7 +529,7 @@
     </section>
 
     <!-- ========== Contact ========== -->
-    <section class="section" id="contact" aria-labelledby="contact-title">
+    <section class="section band-invert" id="contact" aria-labelledby="contact-title">
       <div class="container contact">
         <header class="section-head" data-reveal>
           <p class="section-num" aria-hidden="true">04</p>
@@ -568,7 +569,7 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer band-invert">
     <div class="container footer-inner">
       <p class="footer-name">© 2026 Utkarsh Rai</p>
       <nav aria-label="Footer">
