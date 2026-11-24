@@ -1,13 +1,11 @@
-/* Interactive canvases:
-   1. .hero-field  – ambient "embedding space" behind the hero; points near the cursor link into a small network.
-   2. .pg-canvas   – the search playground: resumes clustered by meaning; a query lights up its nearest neighbours.
-   Both pause when off-screen, follow the light/dark theme, and stay still for reduced-motion users. */
+/* Interactive canvas:
+   .pg-canvas – the search playground: resumes clustered by meaning; a query lights up its nearest neighbours.
+   It pauses when off-screen, follow the light/dark theme, and stay still for reduced-motion users. */
 (function () {
   "use strict";
 
   var root = document.documentElement;
   var reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var fields = [];
 
   /* ---------- Theme colours (read from CSS custom properties) ---------- */
@@ -84,63 +82,7 @@
   };
 
   /* =====================================================================
-     1. Hero ambient field
-     ===================================================================== */
-  function HeroField(canvas) {
-    Field.call(this, canvas);
-    var r = rng(7);
-    this.pts = [];
-    for (var i = 0; i < 90; i++) this.pts.push({ x: r(), y: r(), p: r() * Math.PI * 2, s: 0.15 + r() * 0.35, z: 0.6 + r() * 0.8 });
-    if (finePointer) this.trackPointer(canvas.parentElement);
-  }
-  HeroField.prototype = Object.create(Field.prototype);
-  // Keep the field out from behind the "at a glance" panel so its text stays clean.
-  HeroField.prototype.blocked = function () {
-    var card = document.querySelector(".hero-card");
-    if (!card) return null;
-    var c = this.c.getBoundingClientRect(), r = card.getBoundingClientRect(), pad = 18;
-    return { l: r.left - c.left - pad, t: r.top - c.top - pad, r: r.right - c.left + pad, b: r.bottom - c.top + pad };
-  };
-  HeroField.prototype.draw = function (now) {
-    var ctx = this.ctx, w = this.w, h = this.h, t = now / 1000, m = this.mouse, R = 180;
-    var still = !this.animating();
-    var box = this.blocked();
-    var inBox = function (x, y) { return box && x > box.l && x < box.r && y > box.t && y < box.b; };
-    ctx.clearRect(0, 0, w, h);
-    var pos = this.pts.map(function (p) {
-      var x = p.x * w + (still ? 0 : Math.sin(t * p.s + p.p) * 14);
-      var y = p.y * h + (still ? 0 : Math.cos(t * p.s * 0.8 + p.p) * 10);
-      var near = 0;
-      if (m) {
-        var dx = x - m.x, dy = y - m.y, d = Math.hypot(dx, dy);
-        if (d < R) { near = 1 - d / R; x += (dx / (d || 1)) * near * 18; y += (dy / (d || 1)) * near * 18; }
-      }
-      return { x: x, y: y, near: near, z: p.z, hide: inBox(x, y) };
-    });
-    // network lines between points close to the cursor
-    if (m) {
-      for (var i = 0; i < pos.length; i++) {
-        if (!pos[i].near || pos[i].hide) continue;
-        for (var j = i + 1; j < pos.length; j++) {
-          if (!pos[j].near || pos[j].hide) continue;
-          var d = Math.hypot(pos[i].x - pos[j].x, pos[i].y - pos[j].y);
-          if (d < 120) {
-            ctx.strokeStyle = rgba(C.accent, 0.6 * Math.min(pos[i].near, pos[j].near) * (1 - d / 120) + 0.08);
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(pos[i].x, pos[i].y); ctx.lineTo(pos[j].x, pos[j].y); ctx.stroke();
-          }
-        }
-      }
-    }
-    pos.forEach(function (p) {
-      if (p.hide) return;
-      ctx.fillStyle = p.near ? rgba(C.accent, 0.45 + p.near * 0.5) : rgba(C.muted, 0.45);
-      ctx.beginPath(); ctx.arc(p.x, p.y, 1.6 * p.z + p.near * 1.8, 0, Math.PI * 2); ctx.fill();
-    });
-  };
-
-  /* =====================================================================
-     2. Search playground
+     Search playground
      ===================================================================== */
   var CLUSTERS = [
     { label: "Accountants",        x: 0.24, y: 0.30, query: "handles payroll and taxes" },
@@ -294,9 +236,6 @@
   };
 
   /* ---------- Wire up ---------- */
-  var heroCanvas = document.querySelector(".hero-field");
-  if (heroCanvas && heroCanvas.getContext) new HeroField(heroCanvas);
-
   var pgCanvas = document.querySelector(".pg-canvas");
   if (pgCanvas && pgCanvas.getContext) {
     var ui = {

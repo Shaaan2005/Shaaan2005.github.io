@@ -6,8 +6,10 @@ A one-page portfolio site built with plain HTML, CSS and a little JavaScript. Th
 index.html          page content (all sections)
 css/styles.css      design tokens (light + dark), layout, components, responsive rules
 css/motion.css      animations and interactions (reveals, project visuals, theme toggle)
+css/hero-core.css   hero layout, floor grid and the isometric "core" (colours for both themes)
 js/main.js          menu, theme toggle, scroll reveals, project visuals, chart, card tilt, copy button
-js/playground.js    canvas animations: hero field and the "search by meaning" playground
+js/playground.js    canvas animation: the "search by meaning" playground
+js/hero-core.js     hero core: an isometric stack of the layers I build, which comes apart on hover or tap
 assets/             favicon and the resume-screening demo clip + poster
 .nojekyll           tells GitHub Pages to serve files as-is
 ```

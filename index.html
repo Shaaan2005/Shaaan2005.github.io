@@ -36,11 +36,15 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
-  <link rel="stylesheet" href="css/styles.css?v=electric2">
-  <link rel="stylesheet" href="css/motion.css?v=electric2">
-  <script src="js/main.js?v=electric2" defer></script>
-  <script src="js/playground.js?v=electric2" defer></script>
+  <!-- Fonts load without blocking the first paint (text shows in a fallback font, then swaps) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"></noscript>
+  <link rel="stylesheet" href="css/styles.css?v=ux1">
+  <link rel="stylesheet" href="css/motion.css?v=cur2">
+  <link rel="stylesheet" href="css/hero-core.css?v=face5">
+  <script src="js/main.js?v=cur1" defer></script>
+  <script src="js/playground.js?v=core2" defer></script>
+  <script src="js/hero-core.js?v=core5" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -83,49 +87,128 @@
 
   <main id="main">
     <!-- ========== Hero ========== -->
-    <section class="hero container" aria-labelledby="hero-title">
-      <canvas class="hero-field" aria-hidden="true"></canvas>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-floor" aria-hidden="true" data-spot="off"></div>
+      <div class="container hero-grid">
       <div class="hero-text">
-        <p class="eyebrow" data-reveal>AI engineer · B.Tech ECE, IIIT Naya Raipur · Class of 2027</p>
+        <div class="hero-id" data-reveal>
+          <div class="profile">
+            <picture class="hero-avatar">
+              <source srcset="assets/utkarsh-rai-face.webp" type="image/webp">
+              <img src="assets/utkarsh-rai-face.jpg" alt="Portrait of Utkarsh Rai" width="200" height="200" fetchpriority="high" decoding="async">
+            </picture>
+            <!-- Profile card: js/main.js turns the photo into a button that opens this on hover, tap or Enter -->
+            <template id="profile-tpl">
+              <div class="profile-card" id="profile-card" role="dialog" aria-label="Profile: Utkarsh Rai">
+                <div class="pc-head pc-row" style="--i:0">
+                  <img class="pc-photo" src="assets/utkarsh-rai-160.webp" alt="" width="56" height="56">
+                  <div>
+                    <p class="pc-name">Utkarsh Rai</p>
+                    <p class="pc-role">AI engineer · Noida, India</p>
+                  </div>
+                </div>
+                <ul class="pc-stats">
+                  <li class="pc-row" style="--i:1"><span class="pc-num" data-to="2">2</span><span class="pc-label">AI internships</span></li>
+                  <li class="pc-row" style="--i:2"><span class="pc-num" data-to="3">3</span><span class="pc-label">selected AI projects</span></li>
+                  <li class="pc-row" style="--i:3"><span class="pc-num" data-to="107">107</span><span class="pc-label">tests on my main project</span></li>
+                </ul>
+                <p class="pc-focus pc-row" style="--i:4">Retrieval · LLM agents · Evaluation</p>
+                <div class="pc-links pc-row" style="--i:5">
+                  <a href="https://github.com/Shaaan2005">GitHub <span aria-hidden="true">↗</span></a>
+                  <a href="https://www.linkedin.com/in/utkarsh-rai-3236281b4/">LinkedIn <span aria-hidden="true">↗</span></a>
+                  <a href="assets/Utkarsh_Rai_AI_Engineer_Resume.pdf" download>Resume <span aria-hidden="true">↓</span></a>
+                </div>
+              </div>
+            </template>
+          </div>
+          <div class="hero-id-text">
+            <p class="hero-name">Utkarsh Rai</p>
+            <p class="eyebrow"><span class="hero-dot" aria-hidden="true"></span><span class="nowrap">AI engineer</span><span class="id-sep"> · </span><span class="nowrap">B.Tech ECE, IIIT Naya Raipur</span><span class="id-sep"> · </span><span class="nowrap">Class of 2027</span></p>
+          </div>
+        </div>
         <h1 id="hero-title" class="hero-title">I build practical AI software, <em>and then check whether it actually <span class="nowrap">works.<svg class="hero-check" viewBox="0 0 48 40" aria-hidden="true" focusable="false"><path pathLength="1" d="M4 22 C 10 26, 14 31, 18 35 C 24 24, 33 12, 44 4"/></svg></span></em></h1>
-        <p class="hero-lede" data-reveal style="--d:.55s">
+        <p class="hero-lede">
           I’m Utkarsh Rai, an AI engineer in the final year of a B.Tech in Electronics and Communication
           Engineering. I build retrieval systems, multi-agent LLM apps and tool-calling agents, and where I can,
           I measure them with tests and benchmarks. I’ve done two AI internships, at Info Origin and NTPC.
         </p>
         <div class="hero-actions" data-reveal style="--d:.7s">
-          <a class="btn btn-primary" href="#work" data-magnetic>View my work <span class="btn-arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn-primary" href="assets/Utkarsh_Rai_AI_Engineer_Resume.pdf" download data-magnetic>Download resume <span class="btn-meta">PDF</span></a>
+          <a class="btn btn-ghost" href="#work" data-magnetic>View my work <span class="btn-arrow" aria-hidden="true">↓</span></a>
           <a class="btn btn-ghost" href="https://github.com/Shaaan2005" data-magnetic>My GitHub profile <span class="btn-arrow" aria-hidden="true">↗</span></a>
-          <a class="btn btn-ghost" href="assets/Utkarsh_Rai_AI_Engineer_Resume.pdf" download data-magnetic>Download resume <span class="btn-meta">PDF</span></a>
         </div>
-      </div>
 
-      <aside class="hero-card" aria-label="At a glance" data-reveal style="--d:.85s">
-        <figure class="portrait">
-          <picture>
-            <source srcset="assets/utkarsh-rai.webp" type="image/webp">
-            <img src="assets/utkarsh-rai.jpg" alt="Portrait of Utkarsh Rai" width="640" height="640" fetchpriority="high" decoding="async">
-          </picture>
-        </figure>
-        <dl data-stagger>
+        <dl class="hero-facts" aria-label="At a glance" data-reveal style="--d:.85s">
           <div>
+            <svg class="fact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
             <dt>Focus</dt>
             <dd>Retrieval, LLM agents and evaluation</dd>
           </div>
           <div>
+            <svg class="fact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>
             <dt>Internships</dt>
             <dd>Data Science &amp; AI Intern, Info Origin (2026) · AI Intern, NTPC (2025)</dd>
           </div>
           <div>
-            <dt>Studying</dt>
-            <dd>B.Tech ECE, IIIT Naya Raipur (2023–2027)</dd>
-          </div>
-          <div>
+            <svg class="fact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
             <dt>Based in</dt>
             <dd>Noida, India</dd>
           </div>
         </dl>
-      </aside>
+      </div>
+
+      <!-- The five layers of a system I build, bottom to top. js/hero-core.js turns them into an
+           isometric stack that comes apart on hover; without JS (and on phones) they read as a list. -->
+      <div class="hero-visual">
+        <div class="core" data-core></div>
+        <ol class="core-stages" id="core-stages" aria-label="How I build an AI system, from data to evaluation">
+          <li class="stage-card" data-side="right">
+            <div class="stage">
+              <span class="stage-n">01</span>
+              <svg class="stage-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+              <p class="stage-title">Sources</p>
+              <p class="stage-items">Resumes · Papers · Job posts</p>
+              <p class="stage-tools">PDF &amp; DOCX parsing</p>
+            </div>
+          </li>
+          <li class="stage-card" data-side="left">
+            <div class="stage">
+              <span class="stage-n">02</span>
+              <svg class="stage-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v13c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8v-13M4.5 12c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8"/></svg>
+              <p class="stage-title">Retrieval</p>
+              <p class="stage-items">Chunks · Embeddings · Search</p>
+              <p class="stage-tools">sentence-transformers · ChromaDB</p>
+            </div>
+          </li>
+          <li class="stage-card" data-side="right" data-main>
+            <div class="stage">
+              <span class="stage-n">03</span>
+              <p class="stage-title">LLM agents <span class="stage-tag">Main layer</span></p>
+              <p class="stage-items">Reasoning · Tool calls · Debate</p>
+              <p class="stage-tools">LangGraph · Llama&nbsp;3 via Ollama</p>
+            </div>
+          </li>
+          <li class="stage-card" data-side="left">
+            <div class="stage">
+              <span class="stage-n">04</span>
+              <svg class="stage-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M6.5 6.5h.01M9.5 6.5h.01"/></svg>
+              <p class="stage-title">Product</p>
+              <p class="stage-items">APIs · Web apps · Validation</p>
+              <p class="stage-tools">FastAPI · Flask · Pydantic</p>
+            </div>
+          </li>
+          <li class="stage-card" data-side="right">
+            <div class="stage">
+              <span class="stage-n">05</span>
+              <svg class="stage-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.6 2.5L16 9.5"/></svg>
+              <p class="stage-title">Evaluation</p>
+              <p class="stage-items">Benchmarks · Tests · Citations</p>
+              <p class="stage-tools">RAGAS · pytest · nDCG@10</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      </div>
     </section>
 
     <!-- ========== Playground ========== -->
@@ -195,7 +278,7 @@
               </div>
               <div class="demo-screen">
               <video controls muted playsinline preload="none" width="1280" height="800"
-                     poster="assets/resume-screening-demo-poster.jpg"
+                     poster="assets/resume-screening-demo-poster.webp"
                      aria-describedby="demo-caption">
                 <source src="assets/resume-screening-demo.mp4" type="video/mp4">
                 <a href="https://github.com/Shaaan2005/AI-Resume-Screening-and-RAG-Evaluation-System#-demo-walkthrough">Watch the demo walkthrough on GitHub</a>
@@ -203,7 +286,7 @@
               </div>
             </div>
             <figcaption id="demo-caption">
-              Demo recording at 2× speed (21&nbsp;s, no sound): a semantic search across the 242 sample resumes,
+              Demo recording at 2× speed (21&nbsp;s, no sound), playing on a loop: a semantic search across the 242 sample resumes,
               matching one resume against a job description, then the benchmark dashboard.
             </figcaption>
           </figure>
@@ -579,7 +662,7 @@
         <div class="contact-body" data-reveal>
           <p class="contact-lead">
             I’m based in Noida, India. Whether it’s about an opportunity or one of these projects, email is the
-            best way to reach me. I’m also on LinkedIn, and all my code is on GitHub.
+            best way to reach me. You can also call me, find me on LinkedIn, and see all my code on GitHub.
           </p>
 
           <div class="contact-email">
@@ -592,6 +675,10 @@
           </div>
 
           <ul class="contact-list">
+            <li>
+              <span class="contact-label">Phone</span>
+              <a href="tel:+918287350252">Call me at +91 82873 50252</a>
+            </li>
             <li>
               <span class="contact-label">Resume</span>
               <a href="assets/Utkarsh_Rai_AI_Engineer_Resume.pdf" download>Download my resume (PDF, 1 page) <span aria-hidden="true">↓</span></a>
@@ -626,6 +713,16 @@
           <li><a href="#top">Back to top <span aria-hidden="true">↑</span></a></li>
         </ul>
       </nav>
+    </div>
+    <!-- Giant wordmark: rises through the floor line letter by letter, with a reflection (js/main.js) -->
+    <div class="container footer-mark" aria-hidden="true">
+      <p class="fm-word fm-top">Utkarsh Rai</p>
+      <span class="fm-floor"></span>
+      <div class="fm-mirror"><p class="fm-word fm-reflect">Utkarsh Rai</p></div>
+    </div>
+    <div class="container footer-status">
+      <p><span class="fs-dot" aria-hidden="true"></span>Noida, India<span class="fs-clock" hidden> · <time class="fs-time"></time> IST</span></p>
+      <p class="fs-note">Plain HTML, CSS and a little JavaScript. No frameworks.</p>
     </div>
   </footer>
 </body>

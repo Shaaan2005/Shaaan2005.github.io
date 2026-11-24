@@ -100,6 +100,17 @@
 .js .is-in [data-stagger] > *,
 .js [data-stagger].is-in > * { opacity: 1; transform: none; }
 
+/* Section titles: each word sharpens from a soft blur, a beat after the header starts rising. */
+.js .section-head h2.is-split .tw {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(.18em);
+  transition: opacity .7s var(--ease-out), filter .8s var(--ease-out), transform .9s var(--ease-out);
+  transition-delay: calc(var(--d, 0s) + .12s + var(--wi, 0) * 90ms);
+}
+.js .section-head.is-in h2.is-split .tw { opacity: 1; filter: none; transform: none; }
+
 /* Once revealed, hand transform back to hover interactions (fast, no delay). */
 .js [data-reveal].is-done {
   transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out), border-color var(--dur-1);
@@ -404,6 +415,31 @@
 .copy-label { display: inline-block; }
 .copy-btn.is-copied .copy-label { animation: label-pop .4s var(--ease-out); }
 @keyframes label-pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* Copied: a tick slides in and draws itself, with a soft accent ring pulse. */
+.copy-tick {
+  width: 0;
+  height: 1.05em;
+  margin-right: -.4em; /* cancel the flex gap while the tick is hidden */
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: width .3s var(--ease-out), margin-right .3s var(--ease-out);
+}
+.copy-btn.is-copied .copy-tick {
+  width: 1.05em;
+  margin-right: 0;
+  animation: tick-draw .45s .12s var(--ease-out) forwards;
+}
+@keyframes tick-draw { to { stroke-dashoffset: 0; } }
+.copy-btn.is-copied { animation: copy-ring .7s var(--ease-out); }
+@keyframes copy-ring {
+  from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+  to { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 0%, transparent); }
+}
 
 /* ---------- Responsive for the new pieces ---------- */
 @media (max-width: 64rem) {
@@ -459,34 +495,9 @@
 }
 
 /* =========================================================
-   Signature interactions: hero field, search playground, card tilt
+   Signature interactions: search playground, card tilt (the hero core is in hero-core.css)
    ========================================================= */
 html, body { overflow-x: clip; }
-
-/* ---------- Hero ambient field ---------- */
-.hero { position: relative; isolation: isolate; }
-.hero-text, .hero-card { position: relative; z-index: 1; }
-.hero-field {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  height: 100%;
-  transform: translateX(-50%);
-  z-index: 0;
-  pointer-events: none;
-  /* fade out behind the headline so text stays crisp */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 50%, #000 64%);
-          mask-image: linear-gradient(90deg, transparent 0%, transparent 50%, #000 64%);
-}
-/* (The hero field skips the "at a glance" panel area in JS, so no backdrop is needed.) */
-@media (max-width: 64rem) {
-  .hero-field {
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.25) 45%, #000 85%);
-            mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.25) 45%, #000 85%);
-  }
-}
 
 /* ---------- Search playground ---------- */
 .playground { display: none; border-top: 1px solid var(--rule); padding-block: var(--s-8); }
@@ -584,4 +595,388 @@ html, body { overflow-x: clip; }
 .js .project.is-done { transition: transform .5s var(--ease-out), box-shadow .45s var(--ease-out), border-color var(--dur-1); will-change: transform; }
 @media (hover: none), (prefers-reduced-motion: reduce) {
   .js .project.is-done:hover { transform: none; }
+}
+
+/* =========================================================
+   Scroll and pointer details (js/main.js)
+   ========================================================= */
+
+/* ---------- Project cards: a spotlight that follows the cursor, on the card and its border ---------- */
+.project { position: relative; }
+.project::before,
+.project::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .45s var(--ease-out);
+}
+.project::after {
+  z-index: 2;
+  background: radial-gradient(380px circle at var(--sx, 50%) var(--sy, 0%), color-mix(in srgb, var(--accent) var(--spot-a, 11%), transparent), transparent 65%);
+}
+:root[data-theme="dark"] .project { --spot-a: 18%; }
+.project::before {           /* the border catches the light where the cursor is */
+  z-index: 3;
+  padding: 1px;
+  background: radial-gradient(300px circle at var(--sx, 50%) var(--sy, 0%), var(--accent), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+@media (hover: hover) and (pointer: fine) {
+  .project:hover::before,
+  .project:hover::after { opacity: 1; }
+}
+
+/* ---------- Demo: the frame lies back like a screen on a desk, then settles flat as it scrolls in ---------- */
+.demo.is-tilting { perspective: 1400px; }
+.demo.is-tilting .demo-frame {
+  transform-origin: 50% 0;
+  transform: rotateX(calc((1 - var(--demo-p, 1)) * 24deg)) scale(calc(.94 + var(--demo-p, 1) * .06));
+  will-change: transform;
+}
+
+/* ---------- Experience: the line follows the scroll instead of playing once ---------- */
+.js .timeline.is-scroll .tl-body::after {
+  transform: scaleY(var(--tl-p, 0));
+  transition: none;
+}
+.js .timeline.is-scroll .tl-body::before { transition: transform .5s var(--ease-out), background-color .35s var(--ease-out), box-shadow .35s var(--ease-out); }
+.js .timeline.is-scroll .tl-body.is-reached::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+
+/* ---------- Footer: giant wordmark rising through a floor line, with a reflection ---------- */
+.footer-mark {
+  position: relative;
+  margin-top: var(--s-6);
+  font-size: clamp(3.5rem, 14vw, 12rem);   /* JS refines this so the name fills the width */
+  user-select: none;
+}
+.fm-word {
+  width: max-content;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1em;
+  font-weight: 400;
+  line-height: .92;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  color: var(--ink);
+  overflow: hidden;                          /* the floor line is the bottom edge: letters rise through it */
+  box-sizing: border-box;
+  height: .78em;                             /* ends on the baseline ("Utkarsh Rai" has no descenders) */
+  padding-top: .04em;
+}
+.fl {
+  display: inline-block;
+  color: color-mix(in srgb, var(--accent) calc(var(--near, 0) * 100%), var(--ink));
+  transform: translateY(calc(var(--near, 0) * -6%));
+  transition: transform .9s var(--ease-out), color .3s var(--ease-out);
+  transition-delay: calc(var(--li, 0) * 55ms), 0s;
+}
+.fl-space { width: .22em; }
+.footer-mark.is-done .fl { transition: transform .35s var(--ease-out), color .3s var(--ease-out); }
+.js .footer-mark.is-hidden:not(.is-revealed) .fl { transform: translateY(108%); }
+
+/* The floor: a hairline that lights up from the left once the letters are through. */
+.fm-floor {
+  position: relative;
+  display: block;
+  height: 1px;
+  background: var(--rule-strong);
+}
+.fm-floor::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--accent) 20%, var(--accent) 80%, transparent);
+  transform-origin: 0 50%;
+  transition: transform 1.2s var(--ease-io) .7s, opacity 1.2s var(--ease-out) .7s;
+}
+.js .footer-mark.is-hidden:not(.is-revealed) .fm-floor::after { transform: scaleX(0); opacity: 0; }
+
+/* The reflection: the word flipped under the floor, showing only its first third, fading out. */
+.fm-mirror {
+  height: .34em;
+  overflow: hidden;
+  opacity: .16;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 90%);
+          mask-image: linear-gradient(to bottom, #000, transparent 90%);
+  pointer-events: none;
+}
+.fm-reflect { transform: scaleY(-1); transform-origin: 50% 50%; }
+.fm-reflect .fl { color: var(--ink); transform: none; }
+.js .footer-mark.is-hidden:not(.is-revealed) .fm-reflect .fl { transform: translateY(108%); }
+
+/* Status line under the wordmark */
+.footer-status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-5);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+.fs-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: .6em;
+  border-radius: 50%;
+  vertical-align: .08em;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+  animation: fs-pulse 2.4s var(--ease-out) infinite;
+}
+@keyframes fs-pulse { 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
+.fs-time { font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-dot { animation: none; }
+}
+
+/* ---------- Work: project cards stack like a deck as you scroll (desktop; js/main.js) ---------- */
+@media (min-width: 64.0625rem) {
+  .project-grid.is-stack { display: block; }
+  .js .project-grid.is-stack > .project.project {
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem + var(--stack-i, 0) * 1rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--s-8);
+    align-content: center;
+    min-height: min(30rem, calc(100vh - var(--header-h) - 6rem));
+    margin-bottom: 24vh;
+    padding-left: var(--s-5);
+    box-shadow: var(--shadow);
+    transform-origin: 50% 0;
+    will-change: transform, filter;
+    /* the scroll drives transform and filter directly, so they must not lag behind it */
+    transition: opacity .7s var(--ease-out), border-color .2s var(--ease), box-shadow .3s var(--ease);
+  }
+  .js .project-grid.is-stack > .project:last-child { margin-bottom: 0; }
+  .project-grid.is-stack > .project > * { grid-column: 2; }
+  /* the diagram fills the left half of the card */
+  .project-grid.is-stack > .project > .project-visual {
+    grid-column: auto;          /* with a grid area set, that area would become its containing block */
+    grid-row: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: auto;
+    margin: 0;
+    border-bottom: 0;
+    border-right: 1px solid var(--rule);
+    border-radius: var(--radius) 0 0 var(--radius);
+  }
+  .project-grid.is-stack .viz-board { height: 13rem; }
+  .project-grid.is-stack .viz-trace,
+  .project-grid.is-stack .viz-qa { font-size: 1.05em; }
+  .project-grid.is-stack .project .links { margin-top: var(--s-2); }
+}
+
+/* ---------- Cursor: target frame of four corner brackets (mouse only; js/main.js) ---------- */
+.cursor-frame {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s var(--ease-out);
+}
+.cursor-frame.is-visible { opacity: 1; }
+.cursor-frame.is-visible.is-away { opacity: 0; }
+.cf-c {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  will-change: transform;
+}
+/* Each bracket is drawn from its corner point inward, so the JS only has to place the corner. */
+.cf-c::before {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 0 solid color-mix(in srgb, var(--accent) 88%, transparent);
+  transition: width .3s var(--ease-out), height .3s var(--ease-out), border-color .25s var(--ease-out);
+  /* a hairline in the page colour keeps brackets readable over indigo buttons and the dark band */
+  filter: drop-shadow(0 0 .6px color-mix(in srgb, var(--bg) 90%, transparent));
+}
+.cf-tl::before { left: 0; top: 0; border-top-width: 2px; border-left-width: 2px; }
+.cf-tr::before { right: 0; top: 0; border-top-width: 2px; border-right-width: 2px; }
+.cf-bl::before { left: 0; bottom: 0; border-bottom-width: 2px; border-left-width: 2px; }
+.cf-br::before { right: 0; bottom: 0; border-bottom-width: 2px; border-right-width: 2px; }
+.cursor-frame.is-locked .cf-c::before { width: 10px; height: 10px; border-color: var(--accent); }
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-frame { display: none; }
+}
+@media print { .cursor-frame { display: none; } }
+
+/* =========================================================
+   Table-like lists: Other projects, Tools, benchmark table
+   Hover is instant and CSS-only: the row you point at stays, the others step back
+   (the same treatment as the benchmark chart's rows).
+   ========================================================= */
+
+/* Tools and the benchmark table: the other rows fade back while one is hovered. */
+@media (hover: hover) and (pointer: fine) {
+  .toolbox dl > div,
+  .bench-table tbody tr { transition: opacity .2s var(--ease-out); }
+  .toolbox dl:hover > div:not(:hover),
+  .bench-table tbody:hover tr:not(:hover) { opacity: .42; }
+  .toolbox dl > div:hover dt { color: var(--accent-ink); }
+  .toolbox dl > div dt { transition: color .2s var(--ease-out); }
+}
+
+/* Once a list has finished rising in, drop the stagger delay so hover responds at once
+   (otherwise the lower rows react up to half a second late). */
+.js .toolbox.is-done dl[data-stagger] > div {
+  transition: opacity .2s var(--ease-out);
+  transition-delay: 0s;
+}
+.js .earlier.is-done .earlier-list[data-stagger] > li {
+  transition: padding-left .3s var(--ease-out), background-color .2s, opacity .2s var(--ease-out);
+  transition-delay: 0s;
+}
+
+/* Other projects: linked rows say where they go, with a ↗ at the end on hover or focus. */
+.earlier-list li:not(.no-link) .earlier-tech::after {
+  content: "\2197" / "";
+  display: inline-block;
+  margin-left: .5em;
+  color: var(--accent-ink);
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition: opacity .2s var(--ease-out), transform .25s var(--ease-out);
+}
+.earlier-list li:hover .earlier-tech::after,
+.earlier-list li:focus-within .earlier-tech::after { opacity: 1; transform: none; }
+
+/* Benchmark table: the best value in each column in the accent; rows fade in when it opens. */
+.bench-table td.is-best { color: var(--accent-ink); font-weight: 600; }
+.bench-table[open] tbody tr { animation: row-fade .35s var(--ease-out) both; animation-delay: calc(var(--ri, 0) * 40ms); }
+@keyframes row-fade { from { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bench-table[open] tbody tr { animation: none; }
+}
+
+/* ---------- Demo video: chapter tabs that double as the progress bar (js/main.js) ---------- */
+.demo-player {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 10px 2px 2px;
+}
+.dp-toggle {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .2s var(--ease), color .2s var(--ease), transform .2s var(--ease-out);
+}
+.dp-toggle:hover { border-color: var(--accent); color: var(--accent-ink); }
+.dp-toggle:active { transform: scale(.92); }
+.dp-toggle svg { width: 14px; height: 14px; fill: currentColor; }
+.dp-chapters {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 8fr 8fr 4fr;
+  gap: 6px;
+  min-width: 0;
+}
+.dp-chapter {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: .55em;
+  min-width: 0;
+  min-height: 34px;
+  padding: 12px 0 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--fs-xs);
+  text-align: left;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .2s var(--ease);
+}
+.dp-chapter:hover,
+.dp-chapter.is-current { color: var(--ink); }
+.dp-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+.dp-time { flex: none; font-family: var(--font-mono); font-size: .6875rem; color: var(--muted); }
+.dp-track {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--rule-strong);
+  overflow: hidden;
+}
+.dp-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 60%, transparent), var(--accent));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+.dp-chapter.is-current .dp-track { box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent); }
+.dp-chapter:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.demo video { cursor: pointer; }
+.dp-short { display: none; }
+@media (max-width: 30rem) {
+  .dp-time, .dp-long { display: none; }
+  .dp-short { display: inline; }
+  .dp-chapters { grid-template-columns: 1fr 1fr 1fr !important; } /* equal tabs: labels over durations */
+}
+
+/* A light travels round the frame's edge while the demo plays. */
+@property --edge {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.demo-frame { position: relative; }
+.demo-frame::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 13px;
+  padding: 1.5px;
+  background: conic-gradient(from var(--edge), transparent 0deg 250deg, color-mix(in srgb, var(--accent) 40%, transparent) 300deg, var(--accent) 340deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s var(--ease-out);
+}
+.demo-frame.is-playing::after { opacity: .85; animation: edge-run 8s linear infinite; }
+@keyframes edge-run { to { --edge: 360deg; } }
+@media (prefers-reduced-motion: reduce) {
+  .demo-frame.is-playing::after { animation: none; opacity: 0; }
 }
