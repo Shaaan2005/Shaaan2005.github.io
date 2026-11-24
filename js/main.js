@@ -30,7 +30,7 @@
 
   function applyTheme(t) {
     root.dataset.theme = t;
-    if (themeMeta) themeMeta.setAttribute("content", t === "dark" ? "#0D1117" : "#F7F4EE");
+    if (themeMeta) themeMeta.setAttribute("content", t === "dark" ? "#0D1117" : "#F6F7FB");
     if (themeBtn) themeBtn.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark theme");
   }
 

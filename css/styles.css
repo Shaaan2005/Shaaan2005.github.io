@@ -5,20 +5,22 @@
 
 :root {
   /* Color */
-  --bg: #F7F4EE;          /* warm off-white page */
-  --bg-alt: #EFEAE0;      /* alternate section band */
-  --surface: #FCFBF8;     /* cards */
-  --ink: #1D1B18;         /* primary text */
-  --ink-2: #47423B;       /* secondary text */
-  --muted: #69635A;       /* captions, meta (≥4.5:1 on both backgrounds) */
-  --rule: #DCD5C7;        /* hairlines */
-  --rule-strong: #C7BEAD;
-  --accent: #A13D1B;      /* single restrained accent: burnt sienna */
-  --accent-ink: #8C3416;  /* accent for small text */
-  --accent-wash: #F3E4DB; /* tinted background */
-  --bar-muted: #8F8A80;
+  --bg: #F6F7FB;          /* Electric: cool white page */
+  --bg-alt: #ECEEF7;      /* alternate section band */
+  --surface: #FFFFFF;     /* cards */
+  --ink: #11142A;         /* primary text */
+  --ink-2: #3C4260;       /* secondary text */
+  --muted: #5D6482;       /* captions, meta (≥4.5:1 on both backgrounds) */
+  --rule: #E0E3EF;        /* hairlines */
+  --rule-strong: #C8CDE0;
+  --accent: #4F46E5;      /* single accent: electric indigo */
+  --accent-ink: #4338CA;  /* accent for small text */
+  --accent-wash: #ECEBFF; /* tinted background */
+  --bar-muted: #7C849F;
   --on-accent: #FFFFFF;   /* text on accent fills */
-  --shadow: 0 1px 2px rgba(40, 30, 20, .05), 0 12px 32px -12px rgba(40, 30, 20, .18);
+  --shadow: 0 1px 2px rgba(17, 20, 42, .05), 0 14px 34px -14px rgba(40, 44, 120, .22);
+  --glow-warm: rgba(79, 70, 229, .16);
+  --glow-cool: rgba(14, 165, 233, .14);
   color-scheme: light;
 
   /* Motion */
@@ -1368,18 +1370,18 @@ a:hover { color: var(--accent-ink); text-decoration-color: currentColor; }
 
 /* ---------- Contrasting band: Connect + footer ---------- */
 .band-invert {
-  --bg: #1D1B18;
-  --bg-alt: #252220;
-  --surface: #26231F;
-  --ink: #F2EDE4;
-  --ink-2: #CFC8BC;
-  --muted: #A39C90;
-  --rule: #3A3631;
-  --rule-strong: #55504A;
-  --accent: #E07A52;
-  --accent-ink: #EE9671;
-  --accent-wash: #3A2419;
-  --on-accent: #141311;
+  --bg: #11142A;
+  --bg-alt: #171B36;
+  --surface: #181C38;
+  --ink: #EEF0FA;
+  --ink-2: #C3C8E2;
+  --muted: #9298B8;
+  --rule: #262B4D;
+  --rule-strong: #353B63;
+  --accent: #8B85FF;
+  --accent-ink: #A5A0FF;
+  --accent-wash: #22204A;
+  --on-accent: #11142A;
   background: var(--bg);
   color: var(--ink);
 }
@@ -1445,20 +1447,20 @@ a:hover { color: var(--accent-ink); text-decoration-color: currentColor; }
 }
 
 
-/* ---------- Midnight glows behind the hero (dark theme only) ---------- */
-:root[data-theme="dark"] .hero::before,
-:root[data-theme="dark"] .hero::after {
+/* ---------- Glows behind the hero (Electric: indigo + sky; Midnight: coral + blue) ---------- */
+.hero::before,
+.hero::after {
   content: "";
   position: absolute;
   z-index: 0;
   border-radius: 50%;
   pointer-events: none;
 }
-:root[data-theme="dark"] .hero::before {
+.hero::before {
   width: 760px; height: 760px; right: -160px; top: -200px;
   background: radial-gradient(closest-side, var(--glow-warm), transparent 70%);
 }
-:root[data-theme="dark"] .hero::after {
+.hero::after {
   width: 680px; height: 680px; left: -280px; bottom: -300px;
   background: radial-gradient(closest-side, var(--glow-cool), transparent 70%);
 }
@@ -1466,6 +1468,6 @@ a:hover { color: var(--accent-ink); text-decoration-color: currentColor; }
 /* Keep full-bleed decorations (hero field, glows) from widening the page */
 main { overflow-x: clip; }
 @media (max-width: 48rem) {
-  :root[data-theme="dark"] .hero::before { width: 420px; height: 420px; right: -120px; top: -80px; }
-  :root[data-theme="dark"] .hero::after { width: 380px; height: 380px; left: -180px; bottom: -160px; }
+  .hero::before { width: 420px; height: 420px; right: -120px; top: -80px; }
+  .hero::after { width: 380px; height: 380px; left: -180px; bottom: -160px; }
 }
